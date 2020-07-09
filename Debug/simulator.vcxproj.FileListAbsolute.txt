@@ -1,2 +1,0 @@
-C:\work\project\模拟硬件库\git\HA_Sim\Debug\simulator.exe
-C:\work\project\模拟硬件库\git\HA_Sim\Debug\simulator.pdb
