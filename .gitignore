@@ -2,3 +2,5 @@
 [Rr]elease/
 x64/
 .vs/simulator/v16/ipch/
+*.opendb
+.vs/simulator/v16/.suo
