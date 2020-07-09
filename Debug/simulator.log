@@ -1,0 +1,117 @@
+﻿  alu.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  CData_io.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  ConstROM.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(4,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(5,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(6,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(7,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(8,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(9,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(10,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(11,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(12,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(13,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(14,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(15,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(16,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(17,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(18,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(19,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(20,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(21,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(22,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(23,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(24,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(25,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(26,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(27,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(28,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(29,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(30,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(31,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(32,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(33,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(34,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(35,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(36,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(37,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(38,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(39,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(40,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(41,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(42,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(43,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(44,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(45,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(46,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(47,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(48,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(49,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(50,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(51,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(52,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(53,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(54,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(55,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(56,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(57,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(58,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(59,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(60,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(61,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(62,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(63,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(64,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(65,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(66,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\ConstROM.cpp(67,1): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+  cpu.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  FFT_F.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\src\FFT_F.cpp(5,1): warning C4005: “_CRT_FUNCTIONS_REQUIRED”: 宏重定义
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\corecrt.h(192): message : 参见“_CRT_FUNCTIONS_REQUIRED”的前一个定义
+  fifo.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  FMT_F.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  Global_F.cpp
+  mac.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  Math_F.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+  memory.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  reg.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  SOC_Common_F.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+  STA_F.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+  test.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+  TestHistory.cpp
+  version.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+  main.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+  WDRC_F.cpp
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\type.h(90,2): warning C4091: “typedef ”: 没有声明变量时忽略“oper_status”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(11,2): warning C4091: “typedef ”: 没有声明变量时忽略“verNum”的左侧
+C:\work\project\模拟硬件库\git\HA_Sim\lib\include\version.h(17,2): warning C4091: “typedef ”: 没有声明变量时忽略“YMD”的左侧
+  正在生成代码...
+  simulator.vcxproj -> C:\work\project\模拟硬件库\git\HA_Sim\Debug\simulator.exe

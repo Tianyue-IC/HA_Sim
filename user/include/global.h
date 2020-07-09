@@ -1,6 +1,6 @@
 #pragma once
 
-#define FRAME_DWORD 32                                     // 一帧32点
+#define FRAME_LEN_Word 32                                     // 一帧32点
 
 
 // 函数

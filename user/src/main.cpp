@@ -35,7 +35,7 @@ int main()
 		// 从ADC取一帧数据存入RN_GRAM_IN
 		RD0 = RN_GRAM_IN;
 		RA0 = RD0;
-		if (data_io.getData_1Frame(RA0, FRAME_DWORD) != FRAME_DWORD)
+		if (data_io.getData_1Frame(RA0, FRAME_LEN_Word) != FRAME_LEN_Word)
 		{
 			cout << "end prj" << endl;
 			break;
@@ -45,7 +45,7 @@ int main()
 		// 数据处理
 		// 逐点*0.5
 		RD0 = 0x40004000;
-		RD1 = FRAME_DWORD;
+		RD1 = FRAME_LEN_Word;
 		send_para(RA0);
 		send_para(RD0);
 		send_para(RA0);
@@ -56,7 +56,7 @@ int main()
 		// RN_GRAM_OUT输出一帧数据到DAC
 		RD0 = RN_GRAM_OUT;
 		RA0 = RD0;
-		data_io.outData_1Frame(RA0, FRAME_DWORD);
+		data_io.outData_1Frame(RA0, FRAME_LEN_Word);
 
 
 	}
