@@ -26,6 +26,7 @@ int main()
 	//test_mem_oper();
 	//test_simple_oper();
 	//test_conditional();
+	test_float_model();
 
 
 	// ===================用户代码区====================

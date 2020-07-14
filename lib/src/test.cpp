@@ -654,18 +654,28 @@ void test_mem_oper()
 	SET_M(RA0, RD0);
 	RA0 += 1 * MMU_BASE;
 
-	RA0 = RN_GRAM0;
-	RA1 = RN_GRAM1;
-	RD0 = RN_GRAM0;
-	RD1 = 128;
-	call_AutoField FindMaxIndex;
+	//RA0 = RN_GRAM0;
+	//RA1 = RN_GRAM1;
+	//RD0 = RN_GRAM0;
+	//RD1 = 128;
+	//call_AutoField FindMaxIndex;
 
-	//CCpu::rd0	0x0000004e	int
-
-	//RD0 = 0XFFFFFFFF;
-	//RD1 = 0X1;
-	//RD0 += RD1;
-
+	RD0 = 0X401D520D;
+	RD1 = 0X435EADBF;
+	call_AutoField Power10_Float;
 
 }
 
+void test_float_model()
+{
+	// ¶¨×ª¸¡
+	RD0 = 256;
+	RD1 = 0;
+	call_AutoField fix2float;
+
+	RD1 = 0;
+	call_AutoField float2fix;
+
+
+
+}

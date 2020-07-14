@@ -18,6 +18,8 @@
 #include "SOC_Common_F.h"
 #include "STA_F.h"
 #include "global.h"
+#include "float_model.h"
+
 
 // ÆäËû
 #include "test.h"

@@ -4,3 +4,4 @@
 extern void test_simple_oper();
 extern void test_mem_oper();
 extern void test_conditional();
+extern void test_float_model();

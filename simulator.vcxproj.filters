@@ -84,6 +84,9 @@
     <ClInclude Include="lib\include\STA_F.h">
       <Filter>lib_include</Filter>
     </ClInclude>
+    <ClInclude Include="lib\include\float_model.h">
+      <Filter>lib_include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\src\alu.cpp">
@@ -141,6 +144,9 @@
       <Filter>lib_src</Filter>
     </ClCompile>
     <ClCompile Include="lib\src\STA_F.cpp">
+      <Filter>lib_src</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\src\float_model.cpp">
       <Filter>lib_src</Filter>
     </ClCompile>
   </ItemGroup>
