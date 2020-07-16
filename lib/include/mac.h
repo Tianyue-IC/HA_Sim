@@ -12,8 +12,8 @@
 #define MultiVector2 MultiVector2()
 #define ModulationToZero ModulationToZero()
 #define DualSequMulti_Q0 DualSequMulti_Q0()
-#define WienerMultiConst24_DivQ7_LMT WienerMultiConst24_DivQ7_LMT()
-#define WienerSeqMulti_DivQ7 WienerSeqMulti_DivQ7()
+#define MultiConst24_DivQ7_LMT MultiConst24_DivQ7_LMT()
+#define SeqMulti_DivQ7 SeqMulti_DivQ7()
 #define ModulationToZero2 ModulationToZero2()
 #define SingleSerSquareL SingleSerSquareL()
 #define MAC_MultiConst16_Q2207 MAC_MultiConst16_Q2207()
@@ -33,9 +33,9 @@ extern Sub_AutoField ModulationToZero;
 
 extern Sub_AutoField DualSequMulti_Q0;
 
-extern Sub_AutoField WienerMultiConst24_DivQ7_LMT;
+extern Sub_AutoField MultiConst24_DivQ7_LMT;
 
-extern Sub_AutoField WienerSeqMulti_DivQ7;
+extern Sub_AutoField SeqMulti_DivQ7;
 
 extern Sub_AutoField ModulationToZero2;
 

@@ -430,7 +430,7 @@ Sub_AutoField DualSequMulti_Q0
 
 ////////////////////////////////////////////////////////
 //  名称:
-//      WienerMultiConst24_DivQ7_LMT
+//      MultiConst24_DivQ7_LMT
 //  功能:
 //      序列与Const相乘运算，MAC指令为0x9d
 //  参数:
@@ -443,7 +443,7 @@ Sub_AutoField DualSequMulti_Q0
 //  注意事项:
 //      耗时12.2us
 ////////////////////////////////////////////////////////
-Sub_AutoField WienerMultiConst24_DivQ7_LMT
+Sub_AutoField MultiConst24_DivQ7_LMT
 {
 	Mac_Sim(RA0.m_data, RA0.m_data, RD1.m_data, 0x9d, RA1.m_data, RD0.m_data);
 
@@ -454,7 +454,7 @@ Sub_AutoField WienerMultiConst24_DivQ7_LMT
 
 ////////////////////////////////////////////////////////
 //  函数名称:
-//      WienerSeqMulti_DivQ7
+//      SeqMulti_DivQ7
 //  函数功能:
 //      双序列乘运算，MAC指令为0x81
 //  输入参数:
@@ -466,7 +466,7 @@ Sub_AutoField WienerMultiConst24_DivQ7_LMT
 //  注意事项:
 //      耗时12.7us;
 ////////////////////////////////////////////////////////
-Sub_AutoField WienerSeqMulti_DivQ7
+Sub_AutoField SeqMulti_DivQ7
 {
 	int len = RD0.m_data;
 	for (int i = 0; i < len; i++)

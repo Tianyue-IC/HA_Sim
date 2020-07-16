@@ -23,7 +23,7 @@ int main()
 	cout << "start prj" << endl;
 
 	// ===================ÁÙÊ±²âÊÔ===================
-	//test_mem_oper();
+	test_mem_oper();
 	//test_simple_oper();
 	//test_conditional();
 	test_float_model();

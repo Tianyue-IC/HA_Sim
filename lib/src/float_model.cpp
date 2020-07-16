@@ -48,9 +48,10 @@ Sub_AutoField fix2float
 //  功能:
 //      定点转浮点数(序列)
 //  参数:
-//      1.RA0:源数据地址(out)
-//		2.RD0:数据长度
-//		2.RD1:源数据的Q值
+//      1.RA0:源数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:数据长度
+//		4.RD1:源数据的Q值
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -63,7 +64,7 @@ Sub_AutoField fix2float_ser
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField fix2float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -89,7 +90,7 @@ Sub_AutoField float2fix
 	int e = (x & 0x7f800000) >> 23;
 	int m = (x & 0x7fffff) + 0x800000;
 
-	if (s == 1)	
+	if (s == 1)
 		m = -m;
 
 	e = e - 127 + RD1.m_data;
@@ -126,9 +127,10 @@ Sub_AutoField float2fix
 //  功能:
 //      浮点转定点数(序列)
 //  参数:
-//      1.RA0:源数据地址(out)
-//		2.RD0:数据长度
-//		2.RD1:目标数据的Q值
+//      1.RA0:源数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:数据长度
+//		4.RD1:源数据的Q值
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -141,7 +143,7 @@ Sub_AutoField float2fix_ser
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField float2fix;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -231,15 +233,19 @@ Sub_AutoField Add_Float
 //  功能:
 //      浮点加法(双序列)
 //  参数:
-//      1.RA0:加数0(out)
+//      1.RA0:加数0
 //		2.RA1:加数1
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RD1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
 ////////////////////////////////////////////////////////
 Sub_AutoField Add_Float_Dual
 {
+	push(RA2);
+	RA2 = RD1;
+
 	int len = RD0.m_data;
 
 	for (int i = 0; i < len; i++)
@@ -247,10 +253,10 @@ Sub_AutoField Add_Float_Dual
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		RD1 = GET_M(RA1 + i * MMU_BASE);
 		call_AutoField Add_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA2 + i * MMU_BASE, RD0);
 	}
 
-
+	pop(RA2);
 	Return_AutoField(0);
 }
 
@@ -260,9 +266,10 @@ Sub_AutoField Add_Float_Dual
 //  功能:
 //      浮点加法(序列与常数)
 //  参数:
-//      1.RA0:加数0(out)
+//      1.RA0:加数
 //		2.RD1:常数
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RA1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -275,7 +282,7 @@ Sub_AutoField Add_Float_Const
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Add_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -309,15 +316,19 @@ Sub_AutoField Sub_Float
 //  功能:
 //      浮点减法(双序列)
 //  参数:
-//      1.RA0:被减数(out)
+//      1.RA0:被减数
 //		2.RA1:减数
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RD1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
 ////////////////////////////////////////////////////////
 Sub_AutoField Sub_Float_Dual
 {
+	push(RA2);
+	RA2 = RD1;
+
 	int len = RD0.m_data;
 
 	for (int i = 0; i < len; i++)
@@ -325,10 +336,10 @@ Sub_AutoField Sub_Float_Dual
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		RD1 = GET_M(RA1 + i * MMU_BASE);
 		call_AutoField Sub_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA2 + i * MMU_BASE, RD0);
 	}
 
-
+	pop(RA2);
 	Return_AutoField(0);
 }
 
@@ -339,9 +350,10 @@ Sub_AutoField Sub_Float_Dual
 //  功能:
 //      浮点减法(序列减常数)
 //  参数:
-//      1.RA0:被减数(out)
+//      1.RA0:被减数
 //		2.RD1:常数
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RA1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -354,7 +366,7 @@ Sub_AutoField Sub_Float_Const
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Sub_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -388,15 +400,19 @@ Sub_AutoField Mul_Float
 //  功能:
 //      浮点乘法(双序列)
 //  参数:
-//      1.RA0:乘数0地址(out)
+//      1.RA0:乘数0地址
 //		2.RA1:乘数1地址
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RD1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
 ////////////////////////////////////////////////////////
 Sub_AutoField Mul_Float_Dual
-{
+{ 
+	push(RA2);
+	RA2 = RD1;
+
 	int len = RD0.m_data;
 
 	for (int i = 0; i < len; i++)
@@ -404,10 +420,10 @@ Sub_AutoField Mul_Float_Dual
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		RD1 = GET_M(RA1 + i * MMU_BASE);
 		call_AutoField Mul_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA2 + i * MMU_BASE, RD0);
 	}
 
-
+	pop(RA2);
 	Return_AutoField(0);
 }
 
@@ -420,7 +436,8 @@ Sub_AutoField Mul_Float_Dual
 //  参数:
 //      1.RA0:乘数(out)
 //		2.RD1:常数
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RA1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -433,7 +450,7 @@ Sub_AutoField Mul_Float_Const
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Mul_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -468,15 +485,19 @@ Sub_AutoField Div_Float
 //  功能:
 //      浮点除法(双序列)
 //  参数:
-//      1.RA0:被除数地址(out)
+//      1.RA0:被除数地址
 //		2.RA1:除数地址
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RD1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
 ////////////////////////////////////////////////////////
 Sub_AutoField Div_Float_Dual
 {
+	push(RA2);
+	RA2 = RD1;
+
 	int len = RD0.m_data;
 
 	for (int i = 0; i < len; i++)
@@ -484,10 +505,10 @@ Sub_AutoField Div_Float_Dual
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		RD1 = GET_M(RA1 + i * MMU_BASE);
 		call_AutoField Div_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA2 + i * MMU_BASE, RD0);
 	}
 
-
+	pop(RA2);
 	Return_AutoField(0);
 }
 
@@ -498,9 +519,10 @@ Sub_AutoField Div_Float_Dual
 //  功能:
 //      浮点除法(序列除常数)
 //  参数:
-//      1.RA0:被除数地址(out)
+//      1.RA0:被除数地址
 //		2.RD1:常数
-//		3.RD0;序列长度
+//		3.RD0:序列长度
+//		4.RA1:输出序列地址
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -513,7 +535,7 @@ Sub_AutoField Div_Float_Const
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Div_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -546,8 +568,9 @@ Sub_AutoField Recip_Float
 //  功能:
 //      浮点求倒数(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -560,7 +583,7 @@ Sub_AutoField Recip_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Recip_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -592,8 +615,9 @@ Sub_AutoField Sqrt_Float
 //  功能:
 //      浮点求开平方(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -606,7 +630,7 @@ Sub_AutoField Sqrt_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Recip_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -638,8 +662,9 @@ Sub_AutoField Log2_Float
 //  功能:
 //      浮点求log2(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -652,7 +677,7 @@ Sub_AutoField Log2_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Log2_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -684,8 +709,9 @@ Sub_AutoField Log10_Float
 //  功能:
 //      浮点求log10(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -698,7 +724,7 @@ Sub_AutoField Log10_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Log10_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -730,8 +756,9 @@ Sub_AutoField Ln_Float
 //  功能:
 //      浮点求ln(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -744,7 +771,7 @@ Sub_AutoField Ln_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Ln_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -777,8 +804,9 @@ Sub_AutoField Abs_Float
 //  功能:
 //      浮点求绝对值(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -791,7 +819,7 @@ Sub_AutoField Abs_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Abs_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -823,8 +851,9 @@ Sub_AutoField Neg_Float
 //  功能:
 //      浮点求负(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -837,7 +866,7 @@ Sub_AutoField Neg_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Neg_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -869,8 +898,9 @@ Sub_AutoField Power2_Float
 //  功能:
 //      浮点求2的指数(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -883,7 +913,7 @@ Sub_AutoField Power2_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Power2_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 
@@ -917,8 +947,9 @@ Sub_AutoField Power10_Float
 //  功能:
 //      浮点求10的指数(序列)
 //  参数:
-//      1.RA0:数据地址(out)
-//		2.RD0;序列长度
+//      1.RA0:数据地址
+//		2.RA1:输出序列地址
+//		3.RD0:序列长度
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -931,7 +962,7 @@ Sub_AutoField Power10_Float_Seq
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		call_AutoField Power10_Float;
-		SET_M(RA0 + i * MMU_BASE, RD0);
+		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
 

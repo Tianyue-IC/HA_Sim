@@ -1748,7 +1748,7 @@
 //RA1 = RN_GRAM1;
 //RD0 = 128;		//序列长度
 //RD1 = 0x200;
-//WienerMultiConst24_DivQ7_LMT();
+//MultiConst24_DivQ7_LMT();
 //序列与Const相乘运算，
 //0xfec00000
 //0xff400000
@@ -1883,7 +1883,7 @@
 //RA1 = RN_GRAM0;
 //RD0 = 128;		//序列长度
 //RD1 = RN_GRAM1;
-//WienerSeqMulti_DivQ7();
+//SeqMulti_DivQ7();
 //双序列乘运算
 //0x7fff0000
 //0x7fff0000
