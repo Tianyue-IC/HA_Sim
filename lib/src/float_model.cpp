@@ -224,6 +224,8 @@ Sub_AutoField Add_Float
 
 	a += b;
 	double2float(a);
+
+	Return_AutoField(0);
 }
 
 
@@ -309,6 +311,8 @@ Sub_AutoField Sub_Float
 
 	a -= b;
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -393,6 +397,7 @@ Sub_AutoField Mul_Float
 
 	a = a * b;
 	double2float(a);
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -478,6 +483,8 @@ Sub_AutoField Div_Float
 
 	a = a / b;
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -561,6 +568,8 @@ Sub_AutoField Recip_Float
 
 	a = 1 / a;
 	double2float(a);
+	
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -608,6 +617,8 @@ Sub_AutoField Sqrt_Float
 
 	a = sqrt(a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -655,6 +666,8 @@ Sub_AutoField Log2_Float
 
 	a = log2(a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -702,6 +715,8 @@ Sub_AutoField Log10_Float
 
 	a = log10(a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -749,6 +764,8 @@ Sub_AutoField Ln_Float
 
 	a = log(a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -797,6 +814,8 @@ Sub_AutoField Abs_Float
 
 	a = fabs(a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -822,7 +841,6 @@ Sub_AutoField Abs_Float_Seq
 		SET_M(RA1 + i * MMU_BASE, RD0);
 	}
 
-
 	Return_AutoField(0);
 }
 
@@ -844,6 +862,8 @@ Sub_AutoField Neg_Float
 
 	a = -a;
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -891,6 +911,8 @@ Sub_AutoField Power2_Float
 
 	a = pow(2, a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 ////////////////////////////////////////////////////////
 //  名称:
@@ -939,6 +961,8 @@ Sub_AutoField Power10_Float
 
 	a = pow(10, a);
 	double2float(a);
+
+	Return_AutoField(0);
 }
 
 ////////////////////////////////////////////////////////
@@ -998,6 +1022,8 @@ Sub_AutoField MultiSum_Float
 	}
 
 	double2float(c);
+
+	Return_AutoField(0);
 }
 
 ////////////////////////////////////////////////////////
@@ -1027,6 +1053,8 @@ Sub_AutoField Max_Float
 			b = a;
 	}
 	double2float(b);
+
+	Return_AutoField(0);
 }
 
 ////////////////////////////////////////////////////////
@@ -1056,6 +1084,8 @@ Sub_AutoField Min_Float
 			b = a;
 	}
 	double2float(b);
+
+	Return_AutoField(0);
 }
 
 ////////////////////////////////////////////////////////
@@ -1084,6 +1114,8 @@ Sub_AutoField Mean_Float
 	}
 	b = b / len;
 	double2float(b);
+
+	Return_AutoField(0);
 }
 
 
@@ -1113,4 +1145,6 @@ Sub_AutoField Abs_Mean_Float
 	}
 	b = b / len;
 	double2float(b);
+
+	Return_AutoField(0);
 }
