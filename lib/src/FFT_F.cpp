@@ -52,7 +52,17 @@ Sub_AutoField FFT_fix64
     }
     if (fabs(max0) < fabs(max1))
 		max0 = max1;
-	k = log2(fabs(max0)) + 1;
+
+    if (max0 < 1)
+    {
+        k = 0;
+    }
+    else
+    {
+        k = log2(fabs(max0)) + 1;
+    }
+
+
 	int l = 1 << k;
 	for (int i = 0; i <= 63; i++)
 	{
@@ -126,7 +136,16 @@ Sub_AutoField FFT_Fast128
     }
     if (fabs(max0) < fabs(max1))
         max0 = max1;
+    if (max0<1)
+    {
+        k = 0;
+    }
+    else
+    {
     k = log2(fabs(max0)) + 1;
+    }
+
+    
     int l = 1 << k;
     for (int i = 0; i < 128; i++)
     {
