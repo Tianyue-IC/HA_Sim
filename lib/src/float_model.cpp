@@ -26,6 +26,11 @@ Sub_AutoField fix2float
 		s = 1;
 		x = -x;
 	}
+	else if (x == 0)
+	{
+		RD0 = 0;
+		goto fix2float_end;
+	}
 	int e = log2(x);
 	int m;
 	if (e > 23)
@@ -39,6 +44,7 @@ Sub_AutoField fix2float
 	m &= 0x7fffff;
 	e = log2(x) + 127 - RD1.m_data;
 	RD0 = (s << 31) + (e << 23) + m;
+	fix2float_end:
 	Return_AutoField(0);
 }
 
@@ -194,7 +200,20 @@ void double2float(double x)
 	}
 
 	int e = log2(x);
-	if (e < 0)
+	if (e < -126)
+	{
+		RD0 = 0;
+		return;
+	}
+	else if (e > 127)
+	{
+		if(s==0)
+			RD0 = 0x7fffffff;
+		else
+			RD0 = 0xffffffff;
+		return;
+	}
+	else if (e < 0)
 		e -= 1;
 
 	x = x / (pow(2, e)) - 1;
