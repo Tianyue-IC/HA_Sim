@@ -84,15 +84,21 @@ Sub_AutoField Get_Imag
 Sub_AutoField Real_To_Complex2
 {
 	int len = RD0.m_data;
+	int	x[1024];
 
 	for (int i = 0; i < len; i++)
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);				
 		RD1 = RD0 << 16;					//取低位
-		SET_M(RA1 + 2 * i * MMU_BASE, RD1);
+		x[2 * i] = RD1.m_data;
 
 		RD0 &=0xFFFF0000;					//取高位
-		SET_M(RA1 + (2 * i + 1) * MMU_BASE, RD0);
+		x[2 * i + 1] = RD0.m_data;
+	}
+
+	for (int i = 0; i < (2 * len); i++)
+	{
+		SET_M(RA1 + i * MMU_BASE, x[i]);
 	}
 	Return_AutoField(0);
 
