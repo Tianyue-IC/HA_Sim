@@ -654,9 +654,15 @@ void test_mem_oper()
 	SET_M(RA0, RD0);
 	RA0 += 1 * MMU_BASE;
 
-	//RA0 = RN_GRAM0;
-	//RA1 = RN_GRAM1;
-	//RD0 = RN_GRAM0;
+	RA0 = RN_GRAM0;
+	RA1 = RN_GRAM1;
+	RD0 = 128;
+	call_AutoField Real_To_Complex2;
+	RA0 = RN_GRAM0;
+	RA1 = RN_GRAM0;
+	RD0 = 128;
+	call_AutoField Real_To_Complex2;
+
 	//RD1 = 128;
 	//call_AutoField FindMaxIndex;
 
@@ -672,7 +678,32 @@ void test_float_model()
 	RD0 = 256;
 	RD1 = 0;
 	call_AutoField fix2float;
+	// 浮转定
+	RD1 = 0;
+	call_AutoField float2fix;
 
+	// 0*0
+	RD0 = 0;
+	RD1 = 0;
+	call_AutoField fix2float;
+	RD1 = RD0;
+	call_AutoField Mul_Float;
+	RD1 = 0;
+	call_AutoField float2fix;
+
+	// 测试加法
+	float x = 11782056;
+	float* p = &x;
+	byte* pb = (byte*)p;
+	*(pb + 0) = 0xA8;
+	*(pb + 1) = 0xC7;
+	*(pb + 2) = 0x33;
+	*(pb + 3) = 0x4F;
+
+	RD0 = 0x4B33C7A8;
+	RD1 = 0;
+	call_AutoField float2fix;
+	pop(RD0);
 	RD1 = 0;
 	call_AutoField float2fix;
 
