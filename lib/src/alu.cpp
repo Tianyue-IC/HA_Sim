@@ -440,7 +440,7 @@ Sub_AutoField DMA_TransDimin_PATH1
 	for (int i = 0; i < len; i++)
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
-		SET_M(RA1 + (len - 1 - i) * MMU_BASE, RD0);
+		SET_M(RA1 + (0 - i) * MMU_BASE, RD0);
 
 	}
 	Return_AutoField(0);
