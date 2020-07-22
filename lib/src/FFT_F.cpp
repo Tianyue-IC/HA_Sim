@@ -43,32 +43,31 @@ Sub_AutoField FFT_fix64
 	int k = 0;
     double max0 = 0;
     double max1 = 0;
-    for (int i = 0; i <= 63; i++)
+    for (int i = 0; i < 64; i++)
     {
         if (fabs(fr[i]) > fabs(max0))
-            max0 = fr[i];
+            max0 = fabs(fr[i]);
         if (fabs(fi[i]) > fabs(max1))
-            max1 = fi[i];
+            max1 = fabs(fi[i]);
     }
     if (fabs(max0) < fabs(max1))
-		max0 = max1;
-
+        max0 = max1;
     if (max0 < 1)
     {
         k = 0;
     }
     else
     {
-        k = log2(fabs(max0)) + 1;
+        k = log2(max0) + 1;
     }
 
 
-	int l = 1 << k;
-	for (int i = 0; i <= 63; i++)
-	{
-		fr[i] = fr[i]/l;
-		fi[i] = fi[i]/l;
-	}
+    int l = 1 << k;
+    for (int i = 0; i < 64; i++)
+    {
+        fr[i] = fr[i] / l;
+        fi[i] = fi[i] / l;
+    }
 
 
     for (int i = 0; i <= 63; i++)
@@ -130,9 +129,9 @@ Sub_AutoField FFT_Fast128
     for (int i = 0; i < 128; i++)
     {
         if (fabs(fr[i]) > fabs(max0))
-            max0 = fr[i];
+            max0 = fabs(fr[i]);
         if (fabs(fi[i]) > fabs(max1))
-            max1 = fi[i];
+            max1 = fabs(fi[i]);
     }
     if (fabs(max0) < fabs(max1))
         max0 = max1;
@@ -142,7 +141,7 @@ Sub_AutoField FFT_Fast128
     }
     else
     {
-    k = log2(fabs(max0)) + 1;
+    k = log2(max0) + 1;
     }
 
     
