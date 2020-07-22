@@ -386,7 +386,8 @@ void Multi24_16x24(int Multi24_0, int Multi24_1)
 //  函数名称:
 //      ModulationToZero
 //  函数功能:
-//      MAC指令为0x08,表示（1）实部调制(M1-IN0,M0-IN1)调制,计算y(n).H16*x(n).H16 以及 y(n).H16*x(n).L16,
+//      MAC指令为0x09, Q7输出
+//		表示（1）实部调制(M1-IN0,M0-IN1)调制,计算y(n).H16*x(n).H16 以及 y(n).H16*x(n).L16,
 //      （2）Q0方式输出,即Q0.H16 = DATA1.H16*DATA0.H16（M1乘法器）, Q0.L16 = DATA1.H16*DATA0.L16（M0乘法器）,
 //      参见MAC数据路径示意图（2）文档。
 //  输入参数:
@@ -490,6 +491,7 @@ Sub_AutoField SeqMulti_DivQ7
 //      ModulationToZero2
 //  功能:
 //      调制
+//		MAC指令为0x08, Q7输出
 //  参数:
 //      1.RA0:表地址
 //      2.RA1:操作数地址
