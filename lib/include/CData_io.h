@@ -22,8 +22,11 @@ private:
 
     int readFile(char file[]);
     int readFileBin(char file[]);
+    int readFileBin2(char file[]);
     int writeFile(char file[], int* buf, int len);
     int writeFileBin(char file[], int* buf, int len);
+
+    int writeFileBin2(char file[], int* buf, int len);
 
     short limit(int data);
     void createFile(char file[]);

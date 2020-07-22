@@ -26,7 +26,7 @@ int main()
 	//test_mem_oper();
 	//test_simple_oper();
 	//test_conditional();
-	test_float_model();
+	//test_float_model();
 
 
 	// ===================用户代码区====================
@@ -46,7 +46,7 @@ int main()
 		// 数据处理
 		// 逐点*0.5
 		RD0 = 0x40004000;
-		RD1 = FRAME_LEN_Word;
+		RD1 = FRAME_LEN_DWord;
 		send_para(RA0);
 		send_para(RD0);
 		send_para(RA0);

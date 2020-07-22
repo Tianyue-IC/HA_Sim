@@ -1,6 +1,7 @@
 #pragma once
 
-#define FRAME_LEN_Word 32                                     // 一帧32点
+#define FRAME_LEN_Word  32                                     // 一帧32点
+#define FRAME_LEN_DWord 16                                     // 一帧32点,紧凑排列占据16DWORD
 
 
 // 函数
