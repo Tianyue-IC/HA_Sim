@@ -31,16 +31,17 @@ Sub_AutoField FFT_fix64
 	for (int i = 0; i <= 63; i++)
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
-        x = RD0.m_data;
-        x = x / 65536;
+        x = floor(RD0.m_data / 65536);
         x = x / 32768;
         pr[i] = x;
-		pi[i] = 0.0;
-	}
+        x = *(short*)(&RD0.m_data);					//µÍ16bit 
+        x = x / 32768;
+        pi[i] = x;
+    }
 	fft(pr, pi, 64, fr, fi);    //fft
 
-    //ÏÞ·ùÅÐÒç³ö
-	int k = 0;
+   //ÏÞ·ùÅÐÒç³ö
+    int k = 0;
     double max0 = 0;
     double max1 = 0;
     for (int i = 0; i < 64; i++)
@@ -114,11 +115,12 @@ Sub_AutoField FFT_Fast128
     for (int i = 0; i < 128; i++)
     {
         RD0 = GET_M(RA0 + i * MMU_BASE);
-        x = RD0.m_data;
-        x = x / 65536;
+		x = floor(RD0.m_data / 65536);
         x = x / 32768;
         pr[i] = x;
-        pi[i] = 0.0;
+        x = *(short*)(&RD0.m_data);					//µÍ16bit 
+        x = x / 32768;
+        pi[i] = x;
     }
     fft(pr, pi, 128, fr, fi);    //fft
 
