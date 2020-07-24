@@ -3,6 +3,9 @@
 int CReg::m_rq = 0;
 oper_status CReg::m_oper_status;
 
+extern void m_w(int offset, int data);
+
+
 CReg::CReg()
 {
     m_data = 0;
@@ -21,8 +24,17 @@ void CReg::operator = (signed data)
 
 void CReg::operator = (CReg data)
 {
-    m_data = data.m_data;
-    m_rq = m_data;
+    if (isMemID())
+    {
+        m_w(this->m_offset, data.m_data);
+        m_data = data.m_data;
+    }
+    else
+    {
+        m_data = data.m_data;
+        m_rq = m_data;
+    }
+    
 }
 
 CReg CReg::operator+(signed data)

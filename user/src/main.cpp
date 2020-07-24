@@ -68,9 +68,18 @@ int main()
 
 void sys_init()
 {
-	// 本函数不允许修改
+	// 这块代码不允许修改
 	CVersion ver111;		// 显示库版本信息
-	CMemBase::init();		// 内存初始化
+	CMemBase::init();		// 内存初始化，RSP初始化
+
+	// 以下为用户代码区
+	RD0 = RSP;
+	RD1 = RN_GLOBAL_VAR_TOTAL_LEN_B;
+	RD0 -= RD1;
+	RSP = RD0;
+	RA4 = RD0;				// RA4指向全局变量起始地址
+
+
 }
 
 

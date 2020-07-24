@@ -8,6 +8,11 @@ public:
     // 构造
     CReg();
     CReg(int data);
+    CReg(int data, int ID)
+    {
+        m_data = data;
+        m_ID = ID;
+    }
 
     // 赋值
     void operator = (signed data);      // RDx = 立即数
@@ -52,6 +57,7 @@ public:
 
 public:
     int m_data;
+    static const int ID_MEM = 0x40;     // 特殊寄存器
 
     bitField_union GetBitField()
     {
@@ -78,13 +84,24 @@ public:
         return m_oper_status;
     }
 
+    // 特殊用于ID_MEM寄存器
+    void setMemOffset(int offset)
+    {
+        m_offset = offset;
+    }
 
 private:
     static int m_rq;
+    int m_offset;
+    int m_ID = 0xffffffff;                // ID是RD,RA的身份标识,如RD0~RD15的ID为0~15,RA0~RA7的ID为24~31
     static oper_status m_oper_status;
 
     static bool isAddOverflow(int x, int y);
 
     static bool isAddOverflowH(int x, int y);
 
+    bool isMemID()
+    {
+        return (m_ID == ID_MEM);
+    }
 };

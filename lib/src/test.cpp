@@ -670,6 +670,37 @@ void test_mem_oper()
 	RD1 = 0X435EADBF;
 	call_AutoField Power10_Float;
 
+
+	// 测试全局变量
+	RD0 = 0x11223344;
+	g_0 = RD0;
+	RD1 = g_0;
+
+	RD0 = 0x55667788;
+	g_1 = RD0;
+	RD1 = g_1;
+
+	// 测试M[RA]
+	RD0 = 0x11112222;
+	RSP -= 4 * MMU_BASE;
+	RA0 = RSP;
+	M[RA0] = RD0;
+	RA0 += 1 * MMU_BASE;
+	RD0 += 1;
+	M[RA0] = RD0;
+	RA0 += 1 * MMU_BASE;
+	RD0 += 1;
+	M[RA0] = RD0;
+	RA0 += 1 * MMU_BASE;
+	RD0 += 1;
+	M[RA0] = RD0;
+	RA0 += 1 * MMU_BASE;
+	RD0 += 1;
+
+	RD1 = M[RSP];
+	RSP += 4 * MMU_BASE;
+
+
 }
 
 void test_float_model()

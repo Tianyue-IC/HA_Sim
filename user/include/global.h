@@ -1,12 +1,15 @@
 #pragma once
+#include "inc_lib.h"
+
 
 #define FRAME_LEN_Word  32                                     // 一帧32点
 #define FRAME_LEN_DWord 16                                     // 一帧32点,紧凑排列占据16DWORD
 
 
-// 函数
-
-
+// 全局变量
+#define RN_GLOBAL_VAR_TOTAL_LEN_B   256       // 全局变量字节长度(用户自行修改)
+#define g_0                       M[RA4+0*MMU_BASE]           // 举个例子
+#define g_1                       M[RA4+1*MMU_BASE]           // 举个例子
 
 
 // RN_GRAMx RN_XRAMx类似于全局空间，无需申请，读写必须通过memcpy_gx

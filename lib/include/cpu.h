@@ -42,6 +42,9 @@
 #define RA6 _cpu.ra6
 #define RA7 _cpu.ra7
 
+#define RD_MEM _cpu.rd_mem  // 特殊的寄存器，用户禁止使用
+
+
 // 单操作数
 // 单操作数:算术移位
 #define RF_ShiftL1(x)       CCpu::RF_ShiftX(x, 1)               // 无符号数据算术移位
@@ -227,32 +230,33 @@
 class CCpu
 {
 public:
-    REG_DEF rd0;
-    REG_DEF rd1;
-    REG_DEF rd2;
-    REG_DEF rd3;
-    REG_DEF rd4;
-    REG_DEF rd5;
-    REG_DEF rd6;
-    REG_DEF rd7;
-    REG_DEF rd8;
-    REG_DEF rd9;
-    REG_DEF rd10;
-    REG_DEF rd11;
-    REG_DEF rd12;
-    REG_DEF rd13;
-    REG_DEF rd14;
-    REG_DEF rd15;
+    REG_DEF rd0 = REG_DEF(0, 0);
+    REG_DEF rd1 = REG_DEF(0, 1);
+    REG_DEF rd2 = REG_DEF(0, 2);
+    REG_DEF rd3 = REG_DEF(0, 3);
+    REG_DEF rd4 = REG_DEF(0, 4);
+    REG_DEF rd5 = REG_DEF(0, 5);
+    REG_DEF rd6 = REG_DEF(0, 6);
+    REG_DEF rd7 = REG_DEF(0, 7);
+    REG_DEF rd8 = REG_DEF(0, 8);
+    REG_DEF rd9 = REG_DEF(0, 9);
+    REG_DEF rd10 = REG_DEF(0, 10);
+    REG_DEF rd11 = REG_DEF(0, 11);
+    REG_DEF rd12 = REG_DEF(0, 12);
+    REG_DEF rd13 = REG_DEF(0, 13);
+    REG_DEF rd14 = REG_DEF(0, 14);
+    REG_DEF rd15 = REG_DEF(0, 15);
 
-    REG_DEF ra0;
-    REG_DEF ra1;
-    REG_DEF ra2;
-    REG_DEF rsp;
-    REG_DEF ra4;
-    REG_DEF ra5;
-    REG_DEF ra6;
-    REG_DEF ra7;
+    REG_DEF ra0 = REG_DEF(0, 24);
+    REG_DEF ra1 = REG_DEF(0, 25);
+    REG_DEF ra2 = REG_DEF(0, 27);
+    REG_DEF rsp = REG_DEF(0, 27);
+    REG_DEF ra4 = REG_DEF(0, 28);
+    REG_DEF ra5 = REG_DEF(0, 29);
+    REG_DEF ra6 = REG_DEF(0, 30);
+    REG_DEF ra7 = REG_DEF(0, 31);
 
+    REG_DEF rd_mem = REG_DEF(0, REG_DEF::ID_MEM); // 专用于M[]操作
 
     // 单操作数
     static void RF_RotateX(CReg& data, int n);

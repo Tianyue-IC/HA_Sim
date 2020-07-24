@@ -4,6 +4,16 @@ int CMemBase::pTotalRam[BASERAM_SIZE_DWORD + GRAM_SIZE_DWORD + XRAM_SIZE_DWORD] 
 //int CMemBase::pGRam[GRAM_SIZE_DWORD] = { 0 };
 //int CMemBase::pXRam[XRAM_SIZE_DWORD] = { 0 };
 
+CMemBase M;
+
+
+void m_w(int offset, int data)
+{
+    int* p = (int*)((unsigned int)CMemBase::pTotalRam + offset);
+    *p = data;
+}
+
+
 void CMemBase::init()
 {
     RSP = BASERAM_SIZE_DWORD*MMU_BASE;
@@ -33,9 +43,9 @@ CReg CMemBase::M_R(CReg RAx)
 // 写RAx所指向的内存
 void CMemBase::M_W(CReg RAx, CReg RDx)
 {
-    int* p = (int*)((unsigned int)pTotalRam + RAx.m_data);
-    *p = RDx.m_data;
+    m_w(RAx.m_data, RDx.m_data);
 }
+
 
 // 压栈RDx
 void CMemBase::PUSH(CReg RDx)

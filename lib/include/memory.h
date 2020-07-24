@@ -27,16 +27,15 @@
 #define GRAM_SIZE_DWORD         (4 * 1024)
 #define XRAM_SIZE_DWORD         (2 * 1024)
 
+
+
 class CMemBase :
     public CCpu
 {
 public:
-    //static const int BASERAM_SIZE_DWORD = 1 * 1024;                     // BASE_RAM尺寸
-    //static int pRam[RAM_SIZE_DWORD];
-    //static const int GRAM_SIZE_DWORD = 4 * 1024;                    // GRAM尺寸
-    //static int pGRam[GRAM_SIZE_DWORD];
-    //static const int XRAM_SIZE_DWORD = 2 * 1024;                     // XRAM尺寸
-    //static int pXRam[XRAM_SIZE_DWORD];
+
+
+
 
     // 将BASE_RAM GRAM XRAM 作为一整块连续地址的内存
     static int pTotalRam[BASERAM_SIZE_DWORD + GRAM_SIZE_DWORD + XRAM_SIZE_DWORD];
@@ -44,7 +43,6 @@ public:
     static void init();
     static void  malloc_local(int len);                             // BASE_RAM中局部变量空间申请，每次申请RSP会减小len，相当于RSP-=len
     static void  release_local(int len);                            // BASE_RAM中局部变量空间释放，每次释放RSP会增加len，相当于RSP+=len
-    //static void malloc_global(int len);                // BASE_RAM中全局变量不用申请，从0地址开始用即可
 
     static CReg M_R(CReg addr);                                     // 取地址所指的数据，相当于RDx = M[RAx]
     static void M_W(CReg addr, CReg data);                          // 设地址所指的数据，相当于M[RAx] = RDx
@@ -52,5 +50,17 @@ public:
     static void POP(CReg &rdx);                                     // 寄存器压栈，相当于push RDx
 
     static void memcpy(CReg len, CReg src, CReg dst);
+
+    // 形如M[RAx+n*MMU_BASE]
+    CReg& operator [](CReg RAx)
+    {
+        RD_MEM.setMemOffset(RAx.m_data);
+        RD_MEM = M_R(RAx);
+        return RD_MEM;
+    }
+
 };
 
+
+
+extern CMemBase M;
