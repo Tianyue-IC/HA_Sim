@@ -34,6 +34,12 @@ public:
     void operator ^= (signed data);
     void operator ^= (CReg data);
 
+    CReg operator ++ ();
+    CReg operator ++ (int);
+    CReg operator -- ();
+    CReg operator -- (int);
+
+
     // Âß¼­ÔËËã
     bool operator >  (signed data);
     bool operator <  (signed data);
