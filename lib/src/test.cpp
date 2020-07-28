@@ -708,7 +708,7 @@ void test_mem_oper()
 	RD0 = 0x44556600;
 	RSP -= 4 * MMU_BASE;
 	RA0 = RSP;
-	M[RA0++] = RD0;
+	M[RA0++] = 1;
 	RD0 += 1;
 	M[RA0++] = RD0;
 	RD0 += 1;
@@ -724,6 +724,8 @@ void test_mem_oper()
 	RD0 += 1;
 	M[--RA0] = RD0;
 	RD0 += 1;
+
+
 
 	RSP += 4 * MMU_BASE;
 

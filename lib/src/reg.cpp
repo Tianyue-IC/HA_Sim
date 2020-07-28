@@ -18,8 +18,19 @@ CReg::CReg(int data)
 
 void CReg::operator = (signed data)
 {
-    m_data = data;
-    m_rq = m_data;
+    if (isMemID())
+    {
+        m_w(this->m_offset, data);
+        m_data = data;
+        m_rq = m_data;
+    }
+    else
+    {
+        m_data = data;
+        m_rq = m_data;
+    }
+
+    
 }
 
 void CReg::operator = (CReg data)
