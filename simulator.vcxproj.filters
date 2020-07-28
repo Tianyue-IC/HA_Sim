@@ -87,6 +87,12 @@
     <ClInclude Include="lib\include\float_model.h">
       <Filter>lib_include</Filter>
     </ClInclude>
+    <ClInclude Include="lib\include\iir_base.h">
+      <Filter>lib_include</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\include\iir.h">
+      <Filter>lib_include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\src\alu.cpp">
@@ -147,6 +153,12 @@
       <Filter>lib_src</Filter>
     </ClCompile>
     <ClCompile Include="lib\src\float_model.cpp">
+      <Filter>lib_src</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\src\iir_base.cpp">
+      <Filter>lib_src</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\src\iir.cpp">
       <Filter>lib_src</Filter>
     </ClCompile>
   </ItemGroup>

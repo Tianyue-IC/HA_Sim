@@ -19,6 +19,7 @@
 #include "STA_F.h"
 #include "global.h"
 #include "float_model.h"
+#include "iir.h"
 
 
 // ÆäËû
