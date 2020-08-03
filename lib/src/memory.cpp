@@ -75,14 +75,78 @@ void CMemBase::memcpy(CReg len, CReg src, CReg dst)
     }
 }
 
-// BASE_RAM的拷贝,len为字节长度
-//void CMemBase::memcpy_gx(int len, unsigned int src, unsigned int dst)
-//{
-//    int* psrc = (int*)((unsigned int)pTotalRam + src);
-//    int* pdst = (int*)((unsigned int)pTotalRam + dst);
-//
-//    for (int i = 0; i < len / MMU_BASE; i++)
-//    {
-//        *(pdst + i) = *(psrc + i);
-//    }
-//}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      En_GRAM_To_CPU
+//  功能:
+//      将GRAM配置为CPU控制模式
+//  参数:
+//      1.RD0:需要配置的GRAM地址
+//  返回值:
+//      无
+////////////////////////////////////////////////////////
+Sub_AutoField En_GRAM_To_CPU
+{
+    Return_AutoField(0);
+}
+////////////////////////////////////////////////////////
+//  名称:
+//      Dis_GRAM_To_CPU
+//  功能:
+//      将GRAM与CPU断开
+//  参数:
+//      无
+//  返回值:
+//      无
+////////////////////////////////////////////////////////
+Sub_AutoField Dis_GRAM_To_CPU
+{
+
+Return_AutoField(0);
+}
+////////////////////////////////////////////////////////
+//  名称:
+//      En_AllRAM_To_CPU
+//  功能:
+//      将所有GRAM和XRAM配置为CPU控制模式
+//  参数:
+//      无
+//  返回值:
+//      无
+////////////////////////////////////////////////////////
+Sub_AutoField En_AllRAM_To_CPU
+{
+Return_AutoField(0);
+}
+////////////////////////////////////////////////////////
+//  名称:
+//      En_AllGRAM_To_CPU
+//  功能:
+//      将所有GRAM配置为CPU控制模式
+//  参数:
+//      无
+//  返回值:
+//      无
+////////////////////////////////////////////////////////
+Sub_AutoField En_AllGRAM_To_CPU
+{
+Return_AutoField(0);
+}
+
+
+////////////////////////////////////////////////////////
+//  名称:
+//      En_AllXRAM_To_CPU
+//  功能:
+//      将所有XRAM配置为CPU控制模式
+//  参数:
+//      无
+//  返回值:
+//      无
+////////////////////////////////////////////////////////
+Sub_AutoField En_AllXRAM_To_CPU
+{
+Return_AutoField(0);
+}
+

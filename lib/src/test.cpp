@@ -729,6 +729,14 @@ void test_mem_oper()
 
 	RSP += 4 * MMU_BASE;
 
+
+	call_AutoField En_GRAM_To_CPU;
+	call_AutoField Dis_GRAM_To_CPU;
+	call_AutoField En_AllRAM_To_CPU;
+	call_AutoField En_AllGRAM_To_CPU;
+	call_AutoField En_AllXRAM_To_CPU;
+
+
 }
 
 void test_float_model()

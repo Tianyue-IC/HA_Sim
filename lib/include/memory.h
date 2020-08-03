@@ -23,6 +23,12 @@
 #define pop(x)          CMemBase::POP(x)
 #define send_para(x)    push(x)
 
+#define En_GRAM_To_CPU      CMemBase::_En_GRAM_To_CPU()
+#define Dis_GRAM_To_CPU     CMemBase::_Dis_GRAM_To_CPU()
+#define En_AllRAM_To_CPU    CMemBase::_En_AllRAM_To_CPU()
+#define En_AllGRAM_To_CPU   CMemBase::_En_AllGRAM_To_CPU()
+#define En_AllXRAM_To_CPU   CMemBase::_En_AllXRAM_To_CPU()
+
 #define BASERAM_SIZE_DWORD      (1 * 1024)
 #define GRAM_SIZE_DWORD         (4 * 1024)
 #define XRAM_SIZE_DWORD         (2 * 1024)
@@ -58,6 +64,12 @@ public:
         RD_MEM = M_R(RAx);
         return RD_MEM;
     }
+
+    static Sub_AutoField _En_GRAM_To_CPU();
+    static Sub_AutoField _Dis_GRAM_To_CPU();
+    static Sub_AutoField _En_AllRAM_To_CPU();
+    static Sub_AutoField _En_AllGRAM_To_CPU();
+    static Sub_AutoField _En_AllXRAM_To_CPU();
 
 };
 
