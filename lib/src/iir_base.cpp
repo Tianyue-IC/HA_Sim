@@ -141,7 +141,7 @@ int CIir_base::setPara(int bank_id, short* paraArray)
 }
 
 // 
-int CIir_base::iifFilterFrame(int bank, int* dataBuf, int dataLen)
+int CIir_base::iirFilterFrame(int bank, int* dataBuf, int dataLen)
 {
 	iirFilterLevels(dataBuf, dataLen, bank, LEVEL);
 	return 0;

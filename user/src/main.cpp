@@ -6,9 +6,9 @@ using namespace std;
 
 // 全局变量
 char File_In[] = "./user/data/data_in.bin";		// 输入音频数据路径
-char File_Out[] = "./user/data/data_in.bin";	// 输出音频数据路径
+char File_Out[] = "./user/data/data_out.bin";	// 输出音频数据路径
 
-CData_io data_io = CData_io("./user/data/data_in.bin", "./user/data/data_out.bin");     // 数据IO类初始化
+CData_io data_io = CData_io(File_In, File_Out);     // 数据IO类初始化
 
 
 

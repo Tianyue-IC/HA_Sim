@@ -21,7 +21,7 @@ class CIir_base
 {
 public:
     int setPara(int bank_id, short*paraArray);  // paraArray格式：[b11-b15 a12-a15 CFG_IIR, b21-b25 a22-a25 CFG_IIR...],一级10个数
-    int iifFilterFrame(int bank, int* dataBuf, int dataLen);
+    int iirFilterFrame(int bank, int* dataBuf, int dataLen);
 
 private:
     static const int BANK_NUM = 4;                              // 支持多组系数和数据BANK

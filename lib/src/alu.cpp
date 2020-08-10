@@ -26,6 +26,7 @@ Sub_AutoField DMA_Trans_AD
 //      清除指定的GRAM块
 //  参数:
 //      1.RA1:指定的GRAM块地址(out)
+//		2.RA0:借用的地址，必须指向另一个Group
 //      3.RD1:Dword长度
 //  返回值:
 //      无

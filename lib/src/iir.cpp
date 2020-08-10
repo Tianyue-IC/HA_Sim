@@ -294,7 +294,7 @@ Sub_AutoField IIR1_Filter
         RD0_SignExtL16;
         data_in[i+1] = RD0.m_data;
     }
-    iir1.iifFilterFrame(bank_id, data_in, len);
+    iir1.iirFilterFrame(bank_id, data_in, len);
     for (int i = 0; i < len; i += 2)
     {
         RD1.m_data = data_in[i];
