@@ -997,7 +997,7 @@ Sub_AutoField Sequ_Recip_Fix_q31_L16Cut
         RD0 = RD0 >> 16;
         RD0 &= 0xff;
         RD1 = a;
-        call _Rs_Multi;
+        call_AutoField _Rs_Multi;
         RD0 += b;
         SET_M(RA1 + i * MMU_BASE, RD0);
         goto L_Sequ_Recip_Fix_q31_L16Cut_3;
