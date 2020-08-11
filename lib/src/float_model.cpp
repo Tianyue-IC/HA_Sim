@@ -119,6 +119,11 @@ Sub_AutoField float2fix
 		m = m << (e - 23);
 		RD0 = m;
 	}
+	else if (e < 0)
+	{
+		m = 0;
+		RD0 = m;
+	}
 	else
 	{
 		m = m >> (23 - e);
@@ -213,7 +218,7 @@ void double2float(double x)
 			RD0 = 0xffffffff;
 		return;
 	}
-	else if (e < 0)
+	else if (log2(x) < 0)
 		e -= 1;
 
 	x = x / (pow(2, e)) - 1;
