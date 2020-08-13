@@ -20,6 +20,7 @@
 #include "global.h"
 #include "float_model.h"
 #include "iir.h"
+#include "fir.h"
 
 
 // ÆäËû

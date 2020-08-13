@@ -26,6 +26,8 @@
     <ClInclude Include="lib\include\DMA_ALU.h" />
     <ClInclude Include="lib\include\FFT_F.h" />
     <ClInclude Include="lib\include\fifo.h" />
+    <ClInclude Include="lib\include\fir.h" />
+    <ClInclude Include="lib\include\fir_base.h" />
     <ClInclude Include="lib\include\float_model.h" />
     <ClInclude Include="lib\include\FMT_F.h" />
     <ClInclude Include="lib\include\iir.h" />
@@ -51,6 +53,8 @@
     <ClCompile Include="lib\src\cpu.cpp" />
     <ClCompile Include="lib\src\FFT_F.cpp" />
     <ClCompile Include="lib\src\fifo.cpp" />
+    <ClCompile Include="lib\src\fir.cpp" />
+    <ClCompile Include="lib\src\fir_base.cpp" />
     <ClCompile Include="lib\src\float_model.cpp" />
     <ClCompile Include="lib\src\FMT_F.cpp" />
     <ClCompile Include="lib\src\Global_F.cpp" />

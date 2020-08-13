@@ -12,7 +12,7 @@
 #define g_1                       M[RA4+1*MMU_BASE]           // 举个例子
 
 
-// RN_GRAMx RN_XRAMx类似于全局空间，无需申请，读写必须通过memcpy_gx
+// RN_GRAMx RN_XRAMx类似于全局空间，无需申请，读写必须通过MEMCPY
 #define RN_GRAM0                BASERAM_SIZE_DWORD*MMU_BASE                     // 1024Byte
 #define RN_GRAM1                (RN_GRAM0+1024)                                 // 1024Byte
 #define RN_GRAM2                (RN_GRAM1+1024)                                 // 1024Byte
