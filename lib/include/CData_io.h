@@ -1,6 +1,6 @@
 #pragma once
 #include "reg.h"
-
+#include <iostream>
 
 
 // 本类不属于硬件操作的一部分
@@ -19,6 +19,9 @@ private:
     char fileOutPath[256];                                  // 输出文件路径
     int inBufNum;                                           // 输入数据个数
     int inBufIndex;                                         // 输入数据缓存当前位置
+
+    FILE* fp_out;
+
 
     int readFile(char file[]);
     int readFileBin(char file[]);

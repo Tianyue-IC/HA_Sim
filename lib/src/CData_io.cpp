@@ -206,6 +206,9 @@ int CData_io::writeFile(char file[], int *buf, int len)
     return 0;
 }
 
+
+
+
 // 将buf写入文件，写入方式是append, 数据格式为音频数据紧密排列，每个采样点为2字节，大端格式
 int CData_io::writeFileBin(char file[], int* buf, int len)
 {
@@ -245,7 +248,7 @@ int CData_io::writeFileBin2(char file[], int* buf, int len)
     unsigned char tempByte[4];
 
     // 打开文件
-    FILE* fp = fopen(file, "ab");
+    FILE* fp = fp_out;
     if (fp == NULL)
     {
         return retlen;
@@ -264,7 +267,7 @@ int CData_io::writeFileBin2(char file[], int* buf, int len)
     }
 
 
-    fclose(fp);
+    //fclose(fp);
 
     return retlen;
 }
@@ -291,6 +294,8 @@ short CData_io::limit(int data)
 
 void CData_io::createFile(char file[])
 {
+    fp_out = NULL;
+
     if (strlen(file) <= 0)
     {
         return;
@@ -301,6 +306,10 @@ void CData_io::createFile(char file[])
     {
         return;
     }
-    fclose(fp);
+    
+    fp_out = fp;
 
 }
+
+
+
