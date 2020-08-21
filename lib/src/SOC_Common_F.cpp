@@ -86,3 +86,34 @@ Sub_AutoField _Rs_Multi
 
 	Return_AutoField(0);
 }
+
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      _Rf_ShiftL_Sequ_32
+//  函数功能:
+//      32位序列左移RD1次，右补0;
+//  输入参数:
+//      1. RA0: 输入序列指针,32位有效;
+//      2. RD0: 序列长度,DWORD数;
+//      3. RD1: 移位次数;
+//  输出参数:
+//      RA0:移位结果序列指针,32位有效;
+//  注意事项:
+//       当RD1=64时,耗时32.5us;
+////////////////////////////////////////////////////////
+Sub_AutoField _Rf_ShiftL_Sequ_32
+{
+	RD3 = RD0;                                                                  // RD3: 序列长度,DWORD数;
+	RD2 = 0x1F;
+	RD2 &= RD1;                                                                 // 限制RD2=0-31,一位次数
+
+L_Rf_ShiftL_Sequ_32_1:
+	RD0 = M[RA0];                                                               // RD0 = x(n), n = 1 to 64
+	RD1 = RD2;
+	call_AutoField _Rf_ShiftL_Reg;
+	M[RA0++] = RD0;                                                             // x(n) = x(n) << RD1
+	RD3 -= 1;
+	if (RQ_nZero) goto L_Rf_ShiftL_Sequ_32_1;
+	Return_AutoField(0);
+}
