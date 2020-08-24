@@ -58,7 +58,7 @@ Sub_AutoField Export_Data_32bit
 Sub_AutoField Export_Vector_32bit
 {
     RA0 = RD0;
-    debug_data.outData_Data32(RA0, RD1.m_data);
+    debug_vector.outData_Data32(RA0, RD1.m_data);
 
     Return_AutoField(0);
 }
