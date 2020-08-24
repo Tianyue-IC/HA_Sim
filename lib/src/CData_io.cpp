@@ -47,7 +47,7 @@ int CData_io::getData_1Frame(CReg RAx, int frameLen)
 
     delete[] frame;
 
-
+    loop++;
     return frameLen;
 }
 
@@ -78,9 +78,48 @@ void CData_io::outData_1Frame(CReg RAx, int frameLen)
     return;
 }
 
+// 从RAx取bLen字节数据，顺序写入到输出文件中
+void CData_io::outData_Data32(CReg RAx, int bLen)
+{
+    int dwLen = bLen / 4;
+
+    int* frame = new int[dwLen];
+    if (frame == NULL)
+    {
+        return;
+    }
+
+    // frame <- RAx
+    for (int i = 0; i < dwLen; i++)
+    {
+        CReg tempRD = GET_M(RAx + i * MMU_BASE);
+        frame[i] = tempRD.m_data;
+    }
+
+    // 写入文件
+    writeFileBin_data32(frame, dwLen);
+
+    delete[] frame;
+    return;
+}
+
+// 从RAx取bLen字节数据（硬件紧凑格式[n+1|n]），改为顺序紧凑[n|n+1]格式写入到输出文件中
+void CData_io::outData_Steam(CReg RAx, int bLen)
+{
+    outData_1Frame(RAx, bLen / 2);
+}
+
+
+
 // 读取文件的数据内容到inBuf
 int CData_io::readFile(char file[])
 {
+    if (strlen(file) <= 1 )
+    {
+        return 0;
+    }
+
+
     // 读取文件后缀, .bin .txt .wav等
     char* pTail = strrchr(file, '.');
     if (strcmp(pTail, ".bin") == 0)
@@ -271,6 +310,37 @@ int CData_io::writeFileBin2(char file[], int* buf, int len)
 
     return retlen;
 }
+
+
+// 将buf内容顺序写入文件，每个数占四字节大端格式，写入方式是append,
+// 返回写入文件的字节数
+int CData_io::writeFileBin_data32(int* buf, int len)
+{
+    int retlen = 0;
+    unsigned char tempByte[4];
+
+    // 打开文件
+    FILE* fp = fp_out;
+    if (fp == NULL)
+    {
+        return retlen;
+    }
+
+    for (int i = 0; i < len; i++)
+    {
+        BYTE* pTemp = (BYTE*)&buf[i];
+        tempByte[0] = pTemp[3];
+        tempByte[1] = pTemp[2];
+        tempByte[2] = pTemp[1];
+        tempByte[3] = pTemp[0];
+
+        fwrite(tempByte, 1, 4, fp);
+        retlen += 4;
+    }
+
+    return retlen;
+}
+
 
 // int转short，并且将数值范围限制在 -32767到32767
 short CData_io::limit(int data)

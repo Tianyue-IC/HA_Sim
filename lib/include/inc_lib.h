@@ -26,3 +26,4 @@
 // ÆäËû
 #include "test.h"
 #include "version.h"
+#include "debug.h"

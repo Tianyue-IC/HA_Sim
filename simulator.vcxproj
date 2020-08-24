@@ -23,6 +23,7 @@
     <ClInclude Include="lib\include\CData_io.h" />
     <ClInclude Include="lib\include\ConstROM.h" />
     <ClInclude Include="lib\include\cpu.h" />
+    <ClInclude Include="lib\include\debug.h" />
     <ClInclude Include="lib\include\DMA_ALU.h" />
     <ClInclude Include="lib\include\FFT_F.h" />
     <ClInclude Include="lib\include\fifo.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="lib\src\CData_io.cpp" />
     <ClCompile Include="lib\src\ConstROM.cpp" />
     <ClCompile Include="lib\src\cpu.cpp" />
+    <ClCompile Include="lib\src\debug.cpp" />
     <ClCompile Include="lib\src\FFT_F.cpp" />
     <ClCompile Include="lib\src\fifo.cpp" />
     <ClCompile Include="lib\src\fir.cpp" />

@@ -29,7 +29,8 @@ int main()
 
 	// ===================用户代码区====================
 	// 算法核心流程(以时域衰减一半为例，可修改)
-
+	RSP -= MMU_BASE;
+	RA2 = RSP;
 
 
 	while (1)
@@ -52,7 +53,10 @@ int main()
 		//send_para(RD1);
 		//call_AutoField MAC_MultiConst16;
 
-
+		M[RA2] = data_io.loop;
+		RD0 = RA2;
+		RD1 = 4;
+		call_AutoField Export_Data_32bit;
 
 		// 数据处理
 		// 高通滤波
@@ -63,6 +67,9 @@ int main()
 		call_AutoField _IIR_PATH3_HP;
 
 
+		RD0 = RN_GRAM_OUT;
+		RD1 = 64;
+		call_AutoField Export_Sound_16bit;
 
 
 
