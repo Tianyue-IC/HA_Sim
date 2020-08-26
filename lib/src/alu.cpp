@@ -236,6 +236,35 @@ Sub_AutoField Add_DMA_Wola
 
 }
 
+
+////////////////////////////////////////////////////////
+//  名称:
+//      Add_DMA_Wola2
+//  功能:
+//      双序列加法运算，32bit运算，DWORD数由参数指定
+//  参数:
+//      1.RA0:输入序列1指针，32bit格式序列(out)
+//      2.RA1:输入序列2指针，32bit格式序列
+//      3.RD0:运算的DWORD数
+//  返回值:
+//      1.RD0:无
+////////////////////////////////////////////////////////
+Sub_AutoField Add_DMA_Wola2
+{
+	int len = RD0.m_data;
+
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RD1 = GET_M(RA1 + i * MMU_BASE);
+		RD0 += RD1;
+		SET_M(RA0 + i * MMU_BASE, RD0);
+	}
+	Return_AutoField(0);
+
+}
+
+
 ////////////////////////////////////////////////////////
 //  名称:
 //      Add_LMT
