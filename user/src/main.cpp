@@ -53,23 +53,34 @@ int main()
 		//send_para(RD1);
 		//call_AutoField MAC_MultiConst16;
 
-		M[RA2] = data_io.loop;
-		RD0 = RA2;
-		RD1 = 4;
-		call_AutoField Export_Data_32bit;
+		//M[RA2] = data_io.loop;
+		//RD0 = RA2;
+		//RD1 = 4;
+		//call_AutoField Export_Data_32bit;
 
-		// 数据处理
-		// 高通滤波
+		//// 数据处理
+		//// 高通滤波
+		//RD0 = RN_GRAM_IN;
+		//RA0 = RD0;
+		//RA1 = RD0;
+		//RD0 = FRAME_LEN_DWord;
+		//call_AutoField _IIR_PATH3_HP;
+
+		// test SingleSerSquare32
 		RD0 = RN_GRAM_IN;
 		RA0 = RD0;
+		RD0 = RN_GRAM1;
 		RA1 = RD0;
 		RD0 = FRAME_LEN_DWord;
-		call_AutoField _IIR_PATH3_HP;
+		call_AutoField SingleSerSquare32;
 
+		RD0 = RA1;
+		RD1 = FRAME_LEN_DWord*4;
+		call_AutoField Export_Data_32bit;
 
-		RD0 = RN_GRAM_OUT;
-		RD1 = 64;
-		call_AutoField Export_Sound_16bit;
+		//RD0 = RN_GRAM_OUT;
+		//RD1 = 64;
+		//call_AutoField Export_Sound_16bit;
 
 
 

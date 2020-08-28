@@ -16,6 +16,7 @@
 #define SeqMulti_DivQ7 SeqMulti_DivQ7()
 #define ModulationToZero2 ModulationToZero2()
 #define SingleSerSquareL SingleSerSquareL()
+#define SingleSerSquare32 SingleSerSquare32()
 #define MAC_MultiConst16_Q2207 MAC_MultiConst16_Q2207()
 
 
@@ -40,6 +41,8 @@ extern Sub_AutoField SeqMulti_DivQ7;
 extern Sub_AutoField ModulationToZero2;
 
 extern Sub_AutoField SingleSerSquareL;
+
+extern Sub_AutoField SingleSerSquare32;
 
 extern Sub_AutoField MAC_MultiConst16_Q2207;
 
