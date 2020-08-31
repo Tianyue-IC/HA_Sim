@@ -116,6 +116,8 @@ extern Sub_AutoField MultiSum_Float;
 
 extern Sub_AutoField Max_Float;
 
+extern Sub_AutoField Min_Float;
+
 extern Sub_AutoField Mean_Float;
 
 extern Sub_AutoField Abs_Mean_Float;
