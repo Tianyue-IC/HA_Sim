@@ -116,14 +116,17 @@ Sub_AutoField Dual_Ser_Add32
 ////////////////////////////////////////////////////////
 Sub_AutoField Dual_Ser_Sub32
 {
+	push(RA2);
+	RA2 = RD1;
 	int len = RD0.m_data;
 	for (int i = 0; i < len; i++)
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
 		RD1 = GET_M(RA1 + i * MMU_BASE);
 		RD0 -= RD1;
-		SET_M(RD1 + i * MMU_BASE, RD0);
+		SET_M(RA2 + i * MMU_BASE, RD0);
 	}
+	pop(RA2);
 	Return_AutoField(0);
 
 }

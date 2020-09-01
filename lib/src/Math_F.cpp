@@ -418,8 +418,10 @@ Sub_AutoField log2_fix
 0xFFFFFE8E,0xFFFFFF47
 	};
 
-	if (x == 0)
-		return;
+    if (x == 0)
+    {
+        Return_AutoField(0);
+    }
 
 	//x=2^e*m
 	int e = log2(x) + 1;
