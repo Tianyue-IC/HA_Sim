@@ -93,6 +93,15 @@
     <ClInclude Include="lib\include\iir.h">
       <Filter>lib_include</Filter>
     </ClInclude>
+    <ClInclude Include="lib\include\debug.h">
+      <Filter>lib_include</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\include\fir_base.h">
+      <Filter>lib_include</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\include\fir.h">
+      <Filter>lib_include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\src\alu.cpp">
@@ -159,6 +168,15 @@
       <Filter>lib_src</Filter>
     </ClCompile>
     <ClCompile Include="lib\src\iir.cpp">
+      <Filter>lib_src</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\src\debug.cpp">
+      <Filter>lib_src</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\src\fir.cpp">
+      <Filter>lib_src</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\src\fir_base.cpp">
       <Filter>lib_src</Filter>
     </ClCompile>
   </ItemGroup>
