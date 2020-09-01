@@ -41,4 +41,5 @@
 // 对GRAM的使用定义如下
 // ============================ GRAM0 ============================
 #define RN_GRAM_IN              RN_GRAM0                                        // 512Byte
+#define RN_GRAM_IN2             (RN_GRAM_IN+32*MMU_BASE)                        // 512Byte
 #define RN_GRAM_OUT             RN_GRAM0                                        // 512Byte
