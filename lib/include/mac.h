@@ -18,6 +18,9 @@
 #define SingleSerSquareL SingleSerSquareL()
 #define SingleSerSquare32 SingleSerSquare32()
 #define MAC_MultiConst16_Q2207 MAC_MultiConst16_Q2207()
+#define ComplexMulti ComplexMulti()
+#define MultiConst32 MultiConst32()
+#define SeqMulti_32 SeqMulti_32()
 
 
 extern Sub_AutoField SingleSerSquare;
@@ -46,3 +49,8 @@ extern Sub_AutoField SingleSerSquare32;
 
 extern Sub_AutoField MAC_MultiConst16_Q2207;
 
+extern Sub_AutoField ComplexMulti;
+
+extern Sub_AutoField MultiConst32;
+
+extern Sub_AutoField SeqMulti_32;

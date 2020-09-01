@@ -1,12 +1,13 @@
 #include "mac.h"
 #include "memory.h"
 #include <math.h>
+#include "global.h"
 
 //模拟器内部函数，无需用类硬件写法
 extern void Multi24(int Multi24_0, int Multi24_1);
 extern void Mac_Sim(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len);
 extern void Multi24_16x24(int Multi24_0, int Multi24_1);
-
+extern void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len);
 
 //本函数库本质是给定不同参数调取Mac硬件，模拟器中实际表现为调取Mac_Sim函数
 //本函数库分两批写成，前面约一半为各自完成功能，后一半使用了Mac_Sim模拟算法
@@ -95,7 +96,7 @@ Sub_AutoField SingleSerSquare
 //  参数:
 //      RA0:输入序列1指针，紧凑16bit格式序列
 //      RA1:输入序列2指针，紧凑16bit格式序列
-//      RD1:输出序列指针，紧凑16bit格式序列(out)
+//      RD1:输出序列指针，紧凑16bit格式序列(out),此为算法验证中间数，有需要时打开注释
 //      RD0:序列长度
 //  返回值:
 //      RD0:乘累加结果
@@ -123,7 +124,7 @@ Sub_AutoField MultiSum
 	RD0 = RD0 >> 15;					//高位乘积（低16bit有效）
 	RD0 = (RD0 << 16);
 	RD0 += RD1;
-	SET_M(RA2, RD0);
+	//SET_M(RA2, RD0);
 
 	for (int i = 1; i < len; i++)
 	{
@@ -144,7 +145,7 @@ Sub_AutoField MultiSum
 		RD0 = k >> 15;					//本轮低位乘累加和（低16bit有效）
 		RD0 = (RD0 << 16);
 		RD0 += RD1;
-		SET_M(RA2 + i * MMU_BASE, RD0);
+		//SET_M(RA2 + i * MMU_BASE, RD0);
 
 	}
 	//此时RD0的值就是最后乘累加的值
@@ -579,3 +580,232 @@ Sub_AutoField MAC_MultiConst16_Q2207
 
 }
 
+////////////////////////////////////////////////////////
+//  名称:
+//      ComplexMulti 
+//  功能:
+//      双序列复数乘法运算
+//  参数:
+//      1.RA0：输入序列0地址，紧凑16bit格式
+//      2.RA1：输入序列1地址，紧凑16bit格式
+//      3.RD1：输出序列地址，紧凑16bit格式
+//      4.RD0：数据长度|输出格式指令。高位为数据长度，低2位为输出格式指令；00：低16bit，01：中16bit，10：高16bit
+//  返回值值:
+//      无
+//  注意事项:
+//		无;
+////////////////////////////////////////////////////////
+Sub_AutoField ComplexMulti
+{
+	push(RA2);
+	RA2 = RD1;
+
+	int Q = RD0.m_data;		//config配置参数
+	int len = Q >> 16;		//高位为序列长度
+	Q = RD0 & 0x3;			//低2bit为输出格式指令 
+
+	int A, B, C, D, AC, BD, AD, BC, H, L;
+	long long x, y, z;
+	y = 0x7fffffff;			//限幅数据
+	z = 0xffffffff80000000;
+
+	for (int i = 0; i < len; i++)
+	{
+		//根据公式：(A+Bi)*(C+Di)=(AC-BD)+(AD+BC)i
+		RD0 = M[RA0 + i * MMU_BASE];
+		A = RD0 >> 16;
+		B = *(short*)(&RD0);
+		RD1 = M[RA1 + i * MMU_BASE];
+		C = RD1 >> 16;
+		D = *(short*)(&RD1);
+		AC = A * C;
+		BD = B * D;
+		AD = A * D;
+		BC = B * C;
+
+		x = AC;
+		x -= BD;
+		if (x > y)	//限幅
+			x = y;
+		else if (x < z)
+			x = z;
+		H = x;
+
+		x = AD;
+		x += BC;
+		if (x > y)	//限幅
+			x = y;
+		else if (x < z)
+			x = z;
+		L = x;
+
+		if (Q == 0)
+		{
+			H = 0xFFFF & H;
+			L = 0xFFFF & L;
+			RD0 = H << 16 + L;
+			M[RA2 + i * MMU_BASE] = RD0;
+		}
+		else if (Q == 1)
+		{
+			H = 0xFFFF & (H >> 8);
+			L = 0xFFFF & (L >> 8);
+			RD0 = H << 16 + L;
+			M[RA2 + i * MMU_BASE] = RD0;
+		}
+		else if (Q == 2)
+		{
+			H = 0xFFFF0000 & H;
+			L = (L >> 16) & 0xFFFF;
+			RD0 = H + L;
+			M[RA2 + i * MMU_BASE] = RD0;
+		}
+		else
+		{
+			pop(RA2);
+			return;
+		}
+	}
+
+	pop(RA2);
+	Return_AutoField(0);
+
+}
+
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      Mac_Sim32
+//  函数功能:
+//      模拟32位宽Mac硬件数据路径
+//  参数:
+//      addr_0:data0地址
+//      addr_1:data1地址
+//      addr_out:out地址
+//		Const_Reg：常数值
+//		Config_Reg：配置参数
+//      len:序列长度
+//  注意事项:
+//      参数编码(暂定):bit3,4决定功能00XX:X*C0+Y*C1(32bit双序列乘常量);01XX:X*Y=Z(32bit乘法)
+//		bit0，1决定取值，00/01/10分别对应从低到高三档结果取值
+////////////////////////////////////////////////////////
+void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len)
+{
+	push(RA0);
+	push(RA1);
+	push(RA2);
+
+	RD0 = addr_0;
+	RA0 = RD0;
+	RD0 = addr_1;
+	RA1 = RD0;
+	RD0 = addr_out;
+	RA2 = RD0;
+
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = M[RA0++];
+		long long X = RD0.m_data;
+		RD0 = M[RA1++];
+		long long Y = RD0.m_data;
+
+		////提取配置选择参数
+		RD0 = (Config_Reg & 0x3);
+		RD1 = (Config_Reg & 0xc) >> 2;
+		if (RD1 == 0)//X*C0+Y*C1
+		{
+			int C0 = Const_Reg >> 16;
+			int C1 = *(short*)(&Const_Reg);
+			X = X * C0;
+			Y = Y * C1;
+			X += Y;
+			if (RD0 == 0)
+			{
+				X &= 0xFFFFFFFF;
+			}
+			else if (RD0 == 1)
+			{
+				X = (X >> 8) & 0xFFFFFFFF;
+			}
+			else if (RD0 == 2)
+			{
+				X = (X >> 16) & 0xFFFFFFFF;
+			}
+			else return;
+		}
+		else if (RD1 == 1)
+		{
+			X = X * Y;
+			if (RD0 == 0)
+			{
+				X &= 0xFFFFFFFF;
+			}
+			else if (RD0 == 1)
+			{
+				X = (X >> 16) & 0xFFFFFFFF;
+			}
+			else if (RD0 == 2)
+			{
+				X = (X >> 32) & 0xFFFFFFFF;
+			}
+			else return;
+		}
+		else return;
+
+		RD0 = X;
+		M[RA2++] = RD0;
+
+	}
+	pop(RA2);
+	pop(RA1);
+	pop(RA0);
+
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      MultiConst32
+//  函数功能:
+//      32bit双序列乘常数再相加运算，X*C0+Y*C1
+//  输入参数:
+//      RA0:输入序列1指针,32bit格式序列
+//      RA1:输入序列2指针,32bit格式序列
+//      RD0:序列长度
+//      RD1:常数，紧凑16bit格式
+//  输出参数:
+//      RA2:输出序列指针,结果为48位中高32位；
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField MultiConst32
+{
+	Mac_Sim32(RA0.m_data, RA1.m_data, RD1.m_data, 0x2, RA2.m_data, RD0.m_data);//高32
+	//Mac_Sim32(RA0.m_data, RA1.m_data, RD1.m_data, 0x1, RA2.m_data, RD0.m_data);//中32
+	//Mac_Sim32(RA0.m_data, RA1.m_data, RD1.m_data, 0x0, RA2.m_data, RD0.m_data);//低32
+
+	Return_AutoField(0);
+}
+
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      SeqMulti_32
+//  函数功能:
+//      32bit双序列乘运算
+//  输入参数:
+//      RA0:输入序列1指针,32bit格式序列
+//      RA1:输入序列2指针,32bit格式序列
+//      RD0:序列长度
+//  输出参数:
+//      RD1:输出序列指针,结果为64位中高32位；
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField SeqMulti_32
+{
+	Mac_Sim32(RA0.m_data, RA1.m_data, 0, 0x6, RD1.m_data, RD0.m_data);//高32bit
+	//Mac_Sim32(RA0.m_data, RA1.m_data, 0, 0x5, RD1.m_data, RD0.m_data);//中间32bit
+	//Mac_Sim32(RA0.m_data, RA1.m_data, 0, 0x4, RD1.m_data, RD0.m_data);//低32bit
+
+	Return_AutoField(0);
+}
