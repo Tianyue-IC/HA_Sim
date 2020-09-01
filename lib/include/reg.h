@@ -110,4 +110,14 @@ private:
     {
         return (m_ID == ID_MEM);
     }
+
+    bool isRdID()
+    {
+        return (m_ID >= 0 && m_ID <= 15);
+    }
+
+    bool isRaID()
+    {
+        return (m_ID >= 24 && m_ID <= 31);
+    }
 };

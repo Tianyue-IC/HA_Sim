@@ -173,7 +173,14 @@ CReg CReg::operator++()
 CReg CReg::operator++(int)
 {
     CReg temp = *this;
-    *this += 4;
+    if (isRaID())
+    {
+        *this += 4;
+    }
+    else
+    {
+        *this += 1;
+    }
     return temp;
 }
 
@@ -187,7 +194,14 @@ CReg CReg::operator--()
 CReg CReg::operator--(int)
 {
     CReg temp = *this;
-    *this -= 4;
+    if (isRaID())
+    {
+        *this -= 4;
+    }
+    else
+    {
+        *this -= 1;
+    }
     return temp;
 
 }
