@@ -643,14 +643,14 @@ Sub_AutoField ComplexMulti
 		{
 			H = 0xFFFF & H;
 			L = 0xFFFF & L;
-			RD0 = H << 16 + L;
+			RD0 = (H << 16) + L;
 			M[RA2 + i * MMU_BASE] = RD0;
 		}
 		else if (Q == 1)
 		{
 			H = 0xFFFF & (H >> 8);
 			L = 0xFFFF & (L >> 8);
-			RD0 = H << 16 + L;
+			RD0 = (H << 16) + L;
 			M[RA2 + i * MMU_BASE] = RD0;
 		}
 		else if (Q == 2)
