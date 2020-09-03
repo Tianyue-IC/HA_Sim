@@ -686,8 +686,10 @@ Sub_AutoField ComplexMulti
 //		Config_Reg：配置参数
 //      len:序列长度
 //  注意事项:
-//      参数编码(暂定):bit3,4决定功能00XX:X*C0+Y*C1(32bit双序列乘常量);01XX:X*Y=Z(32bit乘法)
-//		bit0，1决定取值，00/01/10分别对应从低到高三档结果取值
+//      参数编码(暂定):
+//		bit8 是否关掉X*C0+Y*C1形式下的Y*C1乘法,0-不关;1-关掉
+//		bit3,4决定功能00XX:X*C0+Y*C1(32bit双序列乘常量);01XX:X*Y=Z(32bit乘法)
+//		bit0，1决定取值，00/01/10分别对应从低到高三档结果取值.00-[b31:b0];01-[b38:b7];10-[b46:b15];
 ////////////////////////////////////////////////////////
 void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len)
 {
@@ -717,7 +719,17 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			int C0 = Const_Reg >> 16;
 			int C1 = *(short*)(&Const_Reg);
 			X = X * C0;
-			Y = Y * C1;
+
+			int Config_Reg_b8 = (Config_Reg & 0x100) >> 8;
+			if (Config_Reg_b8 == 0)
+			{
+				Y = Y * C1;
+			}
+			else
+			{
+				Y = 0;	// 不算第二部分
+			}
+
 			X += Y;
 			if (RD0 == 0)
 			{
@@ -725,11 +737,11 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			}
 			else if (RD0 == 1)
 			{
-				X = (X >> 8) & 0xFFFFFFFF;
+				X = (X >> 7) & 0xFFFFFFFF;
 			}
 			else if (RD0 == 2)
 			{
-				X = (X >> 16) & 0xFFFFFFFF;
+				X = (X >> 15) & 0xFFFFFFFF;
 			}
 			else return;
 		}
@@ -742,11 +754,11 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			}
 			else if (RD0 == 1)
 			{
-				X = (X >> 16) & 0xFFFFFFFF;
+				X = (X >> 15) & 0xFFFFFFFF;
 			}
 			else if (RD0 == 2)
 			{
-				X = (X >> 32) & 0xFFFFFFFF;
+				X = (X >> 31) & 0xFFFFFFFF;
 			}
 			else return;
 		}
@@ -764,7 +776,7 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 
 ////////////////////////////////////////////////////////
 //  函数名称:
-//      MultiConst32
+//      MultiConst32_Dual_Q4615
 //  函数功能:
 //      32bit双序列乘常数再相加运算，X*C0+Y*C1
 //  输入参数:
@@ -773,15 +785,76 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 //      RD0:序列长度
 //      RD1:常数，紧凑16bit格式
 //  输出参数:
-//      RA2:输出序列指针,结果为48位中高32位；
+//      RA2:输出序列指针,结果为48位中的高32位[b46:b15]
 //  注意事项:
 //      
 ////////////////////////////////////////////////////////
-Sub_AutoField MultiConst32
+Sub_AutoField MultiConst32_Dual_Q4615
 {
 	Mac_Sim32(RA0.m_data, RA1.m_data, RD1.m_data, 0x2, RA2.m_data, RD0.m_data);//高32
 	//Mac_Sim32(RA0.m_data, RA1.m_data, RD1.m_data, 0x1, RA2.m_data, RD0.m_data);//中32
 	//Mac_Sim32(RA0.m_data, RA1.m_data, RD1.m_data, 0x0, RA2.m_data, RD0.m_data);//低32
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      MultiConst32_Single_Q4615
+//  函数功能:
+//      32bit单序列乘常数，X*C0
+//  输入参数:
+//      RA0:输入序列1指针,32bit格式序列
+//      RD0:序列长度
+//      RD1:常数，紧凑16bit格式
+//  输出参数:
+//      RA1:输出序列指针,结果为48位中的高32位[b46:b15]
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField MultiConst32_Single_Q4615
+{
+	Mac_Sim32(RA0.m_data, RA0.m_data, RD1.m_data, 0x102, RA1.m_data, RD0.m_data);//高32
+
+	Return_AutoField(0);
+}
+////////////////////////////////////////////////////////
+//  函数名称:
+//      MultiConst32_Single_Q3807
+//  函数功能:
+//      32bit单序列乘常数，X*C0
+//  输入参数:
+//      RA0:输入序列1指针,32bit格式序列
+//      RD0:序列长度
+//      RD1:常数，紧凑16bit格式
+//  输出参数:
+//      RA1:输出序列指针,结果为48位中的中32位[b38:b07]
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField MultiConst32_Single_Q3807
+{
+	Mac_Sim32(RA0.m_data, RA0.m_data, RD1.m_data, 0x101, RA1.m_data, RD0.m_data);//中32
+
+	Return_AutoField(0);
+}
+////////////////////////////////////////////////////////
+//  函数名称:
+//      MultiConst32_Single_Q3100
+//  函数功能:
+//      32bit单序列乘常数，X*C0
+//  输入参数:
+//      RA0:输入序列1指针,32bit格式序列
+//      RD0:序列长度
+//      RD1:常数，紧凑16bit格式
+//  输出参数:
+//      RA1:输出序列指针,结果为48位中的低32位[b31:b00]
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField MultiConst32_Single_Q3100
+{
+	Mac_Sim32(RA0.m_data, RA0.m_data, RD1.m_data, 0x100, RA1.m_data, RD0.m_data);//低32
 
 	Return_AutoField(0);
 }
