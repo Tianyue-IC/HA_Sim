@@ -14,6 +14,7 @@
 #define Add_LMT Add_LMT()
 #define Sub_LMT Sub_LMT()
 #define Cal_Single_Add_Const Cal_Single_Add_Const()
+#define Cal_Single_Add_Const32 Cal_Single_Add_Const32()
 #define LMT32To16 LMT32To16()
 #define DMA_Trans DMA_Trans()
 #define DMA_TransDimin_PATH1 DMA_TransDimin_PATH1()
@@ -43,6 +44,8 @@ extern Sub_AutoField Add_LMT;
 extern Sub_AutoField Sub_LMT;
 
 extern Sub_AutoField Cal_Single_Add_Const;
+
+extern Sub_AutoField Cal_Single_Add_Const32;
 
 extern Sub_AutoField LMT32To16;
 
