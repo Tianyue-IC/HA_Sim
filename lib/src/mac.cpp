@@ -8,6 +8,7 @@ extern void Multi24(int Multi24_0, int Multi24_1);
 extern void Mac_Sim(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len);
 extern void Multi24_16x24(int Multi24_0, int Multi24_1);
 extern void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len);
+extern void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out, int len);
 
 //本函数库本质是给定不同参数调取Mac硬件，模拟器中实际表现为调取Mac_Sim函数
 //本函数库分两批写成，前面约一半为各自完成功能，后一半使用了Mac_Sim模拟算法
@@ -757,26 +758,24 @@ Return_AutoField(0 * MMU_BASE);
 //  名称:
 //      ComplexMulti 
 //  功能:
-//      双序列复数乘法运算
+//      双序列复数乘法运算底层函数
 //  参数:
-//      1.RA0：输入序列0地址，紧凑16bit格式
-//      2.RA1：输入序列1地址，紧凑16bit格式
-//      3.RD1：输出序列地址，紧凑16bit格式
-//      4.RD0：数据长度|输出格式指令。高位为数据长度，低2位为输出格式指令；00：低16bit，01：中16bit，10：高16bit
+//      1.addr_0：输入序列0地址，紧凑16bit格式
+//      2.addr_1：输入序列1地址，紧凑16bit格式
+//      3.addr_out：输出序列地址，紧凑16bit格式
+//      4.len：数据长度
+//		5.Config_Reg:输出格式指令，2bit，00：低16bit，01：中16bit，10：高16bit
 //  返回值值:
 //      无
 //  注意事项:
 //		无;
 ////////////////////////////////////////////////////////
-Sub_AutoField ComplexMulti
+void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out, int len)
 {
 	push(RA2);
-	RA2 = RD1;
-
-	int Q = RD0.m_data;		//config配置参数
-	int len = Q >> 16;		//高位为序列长度
-	Q = RD0 & 0x3;			//低2bit为输出格式指令 
-
+	RA2 = addr_out;
+	RA0 = addr_0;
+	RA1 = addr_1;
 	int A, B, C, D, AC, BD, AD, BC, H, L;
 	long long x, y, z;
 	y = 0x7fffffff;			//限幅数据
@@ -812,21 +811,43 @@ Sub_AutoField ComplexMulti
 			x = z;
 		L = x;
 
-		if (Q == 0)
+		if (Config_Reg == 0)
 		{
+			A = H & 0xFFFF0000;
+			if (A > 0)
+				H = 0x7FFF;
+			else if (A < 0)
+				H = 0xFFFF8001;
+			A = L & 0xFFFF0000;
+			if (A > 0)
+				L = 0x7FFF;
+			else if (A < 0)
+				L = 0xFFFF8001;
 			H = 0xFFFF & H;
 			L = 0xFFFF & L;
 			RD0 = (H << 16) + L;
 			M[RA2 + i * MMU_BASE] = RD0;
 		}
-		else if (Q == 1)
+		else if (Config_Reg == 1)
 		{
-			H = 0xFFFF & (H >> 8);
-			L = 0xFFFF & (L >> 8);
+			H = H >> 8;
+			L = L >> 8;
+			A = H & 0xFFFF0000;
+			if (A > 0)
+				H = 0x7FFF;
+			else if (A < 0)
+				H = 0xFFFF8001;
+			A = L & 0xFFFF0000;
+			if (A > 0)
+				L = 0x7FFF;
+			else if (A < 0)
+				L = 0xFFFF8001;
+			H = 0xFFFF & H;
+			L = 0xFFFF & L;
 			RD0 = (H << 16) + L;
 			M[RA2 + i * MMU_BASE] = RD0;
 		}
-		else if (Q == 2)
+		else if (Config_Reg == 2)
 		{
 			H = 0xFFFF0000 & H;
 			L = (L >> 16) & 0xFFFF;
@@ -843,6 +864,69 @@ Sub_AutoField ComplexMulti
 	pop(RA2);
 	Return_AutoField(0);
 
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      ComplexMulti_Q3116
+//  函数功能:
+//      双序列复数乘法运算，(A+Bi)*(C+Di)=(AC-BD)+(AD+BC)i
+//  输入参数:
+//      RA0:输入序列1指针,16bit紧凑格式序列
+//      RA1:输入序列2指针,16bit紧凑格式序列
+//      RD0:序列长度
+//  输出参数:
+//      RD1:输出序列指针,16bit紧凑格式序列,结果为32位中的高16位[b31:b16]
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField ComplexMulti_Q3116
+{
+	ComplexMulti(RA0.m_data, RA1.m_data, 0x2, RD1.m_data, RD0.m_data);//高32
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      ComplexMulti_Q2308
+//  函数功能:
+//      双序列复数乘法运算，(A+Bi)*(C+Di)=(AC-BD)+(AD+BC)i
+//  输入参数:
+//      RA0:输入序列1指针,16bit紧凑格式序列
+//      RA1:输入序列2指针,16bit紧凑格式序列
+//      RD0:序列长度
+//  输出参数:
+//      RD1:输出序列指针,16bit紧凑格式序列,结果为32位中的中16位[b23:b8]
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField ComplexMulti_Q2308
+{
+	ComplexMulti(RA0.m_data, RA1.m_data, 0x1, RD1.m_data, RD0.m_data);//高32
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      ComplexMulti_Q1500
+//  函数功能:
+//      双序列复数乘法运算，(A+Bi)*(C+Di)=(AC-BD)+(AD+BC)i
+//  输入参数:
+//      RA0:输入序列1指针,16bit紧凑格式序列
+//      RA1:输入序列2指针,16bit紧凑格式序列
+//      RD0:序列长度
+//  输出参数:
+//      RD1:输出序列指针,16bit紧凑格式序列,结果为32位中的低16位[b15:b0]
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+Sub_AutoField ComplexMulti_Q1500
+{
+	ComplexMulti(RA0.m_data, RA1.m_data, 0x0, RD1.m_data, RD0.m_data);//高32
+
+	Return_AutoField(0);
 }
 
 
