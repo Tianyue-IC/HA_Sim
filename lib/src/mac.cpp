@@ -9,6 +9,8 @@ extern void Mac_Sim(int addr_0, int addr_1, int Const_Reg, unsigned int Config_R
 extern void Multi24_16x24(int Multi24_0, int Multi24_1);
 extern void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, int addr_out, int len);
 extern void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out, int len);
+extern int limit(long long x);
+extern int limit16(int x);
 
 //本函数库本质是给定不同参数调取Mac硬件，模拟器中实际表现为调取Mac_Sim函数
 //本函数库分两批写成，前面约一半为各自完成功能，后一半使用了Mac_Sim模拟算法
@@ -813,18 +815,8 @@ void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out,
 
 		if (Config_Reg == 0)
 		{
-			A = H & 0xFFFF0000;
-			if (A > 0)
-				H = 0x7FFF;
-			else if (A < 0)
-				H = 0xFFFF8001;
-			A = L & 0xFFFF0000;
-			if (A > 0)
-				L = 0x7FFF;
-			else if (A < 0)
-				L = 0xFFFF8001;
-			H = 0xFFFF & H;
-			L = 0xFFFF & L;
+			H = limit16(H);
+			L = limit16(L);
 			RD0 = (H << 16) + L;
 			M[RA2 + i * MMU_BASE] = RD0;
 		}
@@ -832,18 +824,8 @@ void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out,
 		{
 			H = H >> 8;
 			L = L >> 8;
-			A = H & 0xFFFF0000;
-			if (A > 0)
-				H = 0x7FFF;
-			else if (A < 0)
-				H = 0xFFFF8001;
-			A = L & 0xFFFF0000;
-			if (A > 0)
-				L = 0x7FFF;
-			else if (A < 0)
-				L = 0xFFFF8001;
-			H = 0xFFFF & H;
-			L = 0xFFFF & L;
+			H = limit16(H);
+			L = limit16(L);
 			RD0 = (H << 16) + L;
 			M[RA2 + i * MMU_BASE] = RD0;
 		}
@@ -991,24 +973,12 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			X += Y;
 			if (RD0 == 0)
 			{
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else if (RD0 == 1)
 			{
 				X = (X >> 7);
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else if (RD0 == 2)
 			{
@@ -1029,57 +999,27 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			X = X * Y;
 			if (RD0 == 0)
 			{
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else if (RD0 == 1)
 			{
 				X = X >> 7;
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else if (RD0 == 2)
 			{
 				X = X >> 15;
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else if (RD0 == 3)
 			{
 				X = X >> 23;
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else if (RD0 == 4)
 			{
 				X = X >> 31;
-				Z = X & 0xFFFFFFFF00000000;
-				if (Z > 0)
-					X = 0x7FFFFFFF;
-				else if (Z < -1)
-					X = 0x80000001;
-				else
-					X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 			else return;
 		}
@@ -1172,7 +1112,7 @@ Sub_AutoField MultiConst32_Dual_Q3100
 //  输入参数:
 //      RA0:输入序列1指针,32bit格式序列
 //      RD0:序列长度
-//      RD1:常数，低16bit有效
+//      RD1:常数，高16bit有效
 //  输出参数:
 //      RA1:输出序列指针,结果为48位中的高32位[b46:b15]
 //  注意事项:
@@ -1192,7 +1132,7 @@ Sub_AutoField MultiConst32_Single_Q4615
 //  输入参数:
 //      RA0:输入序列1指针,32bit格式序列
 //      RD0:序列长度
-//      RD1:常数，低16bit有效
+//      RD1:常数，高16bit有效
 //  输出参数:
 //      RA1:输出序列指针,结果为48位中的中32位[b38:b07]
 //  注意事项:
@@ -1212,7 +1152,7 @@ Sub_AutoField MultiConst32_Single_Q3807
 //  输入参数:
 //      RA0:输入序列1指针,32bit格式序列
 //      RD0:序列长度
-//      RD1:常数，低16bit有效
+//      RD1:常数，高16bit有效
 //  输出参数:
 //      RA1:输出序列指针,结果为48位中的低32位[b31:b00]
 //  注意事项:
@@ -1456,4 +1396,73 @@ Sub_AutoField SeqMulti_32X16L_Q3100
 	Mac_Sim32(RA0.m_data, RA1.m_data, 0, 0x38, RD1.m_data, RD0.m_data);//高32bit
 
 	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      limit
+//  函数功能:
+//      32位限幅，大于0x7fffffff限为0x7fffffff;小于0x80000001限为0x80000001
+//  输入参数:
+//      x：限幅前数据
+//  输出参数:
+//      y：限幅后数据；
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+int limit(long long x)
+{
+	int b63 = (x & 0x8000000000000000) >> 63;
+	int y;
+
+	if (b63 == 0)
+	{
+		if (x & 0xFFFFFFFF80000000)
+			y = 0x7fffffff;
+		else
+			y = x;
+	}
+	else
+	{
+		x = ~x;
+		if (x & 0xFFFFFFFF80000000)
+			y = 0x80000001;
+		else
+			y = ~x;
+	}
+
+	return y;
+}
+
+////////////////////////////////////////////////////////
+//  函数名称:
+//      limit16
+//  函数功能:
+//      16位限幅，大于0x7fff限为0x7fff;小于0x8001限为0x8001
+//  输入参数:
+//      x：限幅前数据
+//  输出参数:
+//      y：限幅后数据；
+//  注意事项:
+//      
+////////////////////////////////////////////////////////
+int limit16(int x)
+{
+	int b31 = (x & 0x80000000) >> 31;
+
+	if (b31 == 0)
+	{
+		if (x & 0xFFFF8000)
+			x = 0x7fff;
+	}
+	else
+	{
+		x = ~x;
+		if (x & 0xFFFF8000)
+			x = 0x8001;
+		else
+			x = ~x;
+	}
+
+	return x;
 }
