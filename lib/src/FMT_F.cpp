@@ -11,13 +11,13 @@
 //  参数:
 //      1.RA0:输入序列指针，格式[Re | Im]
 //      2.RA1:输出序列指针，格式[Re(n+1) | Re(n)](out)
-//      3.RD0:序列长度
+//      3.RD0:序列长度,应填入输出序列的DWORD数
 //  返回值:
 //      无
 ////////////////////////////////////////////////////////
 Sub_AutoField Get_Real
 {
-	int len = RD0.m_data;
+	int len = RD0.m_data*2;
 
 	for (int i = 0; i < len; i++)
 	{
@@ -44,13 +44,13 @@ Sub_AutoField Get_Real
 //  参数:
 //      1.RA0:输入序列指针，格式[Re | Im]
 //      2.RA1:输出序列指针，格式[Im(n+1) | Im(n)](out)
-//      3.RD0:序列长度
+//      3.RD0:序列长度,应填入输出序列的DWORD数
 //  返回值:
 //      无
 ////////////////////////////////////////////////////////
 Sub_AutoField Get_Imag
 {
-	int len = RD0.m_data;
+	int len = RD0.m_data*2;
 
 	for (int i = 0; i < len; i++)
 	{
