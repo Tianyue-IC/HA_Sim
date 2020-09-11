@@ -844,7 +844,6 @@ void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out,
 	}
 
 	pop(RA2);
-	Return_AutoField(0);
 
 }
 
@@ -983,7 +982,7 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			else if (RD0 == 2)
 			{
 				X = (X >> 15);
-				X &= 0xFFFFFFFF;
+				X = limit(X);
 			}
 
 			else return;
@@ -993,8 +992,10 @@ void Mac_Sim32(int addr_0, int addr_1, int Const_Reg, unsigned int Config_Reg, i
 			int Config_Reg_b56 = (Config_Reg & 0x30) >> 4;
 			if (Config_Reg_b56 == 1)
 				Y = Y >> 16;
-			else if(Config_Reg_b56==3)
+			else if (Config_Reg_b56 == 3)
 				Y = *(short*)(&Y);
+			else
+				Y &= 0xfffffffffffffffe;
 
 			X = X * Y;
 			if (RD0 == 0)
@@ -1463,6 +1464,7 @@ int limit16(int x)
 		else
 			x = ~x;
 	}
+	x &= 0xffff;
 
 	return x;
 }
