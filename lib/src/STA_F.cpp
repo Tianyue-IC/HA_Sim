@@ -90,6 +90,8 @@ Sub_AutoField AbsSum
 //      2.RD1:数据长度
 //  返回值:
 //      1.RD0:最大值的Index, 0 to L-1;
+//	备注:
+//		取序列的高16位
 ////////////////////////////////////////////////////////
 Sub_AutoField FindMaxIndex
 {
@@ -101,6 +103,8 @@ Sub_AutoField FindMaxIndex
 	for (int i = 0; i < len; i++)
 	{
 		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RF_GetH16(RD0);
+		RD0_SignExtL16;
 		RD0 = abs(RD0.m_data);
 		if (max < RD0.m_data)
 		{
