@@ -322,7 +322,7 @@ Sub_AutoField doublemic
 	RA0 = RD0;
 	RA1 = RD0;
 	RD0 = 16;
-	call_AutoField FIR1;
+	call_AutoField FIR_MAC;
 
 	RD0 = RN_GRAM1;
 	RA0 = RD0;
@@ -332,46 +332,54 @@ Sub_AutoField doublemic
 	call_AutoField Sub_LMT;//序列减，值在RA0
 
 	//第二路
-	RD0 = RN_GRAM_IN;
-	RA0 = RD0;
-	RA1 = RD0;
-	RD0 = 16;
-	call_AutoField FIR2;
+	//RD0 = RN_GRAM_IN;
+	//RA0 = RD0;
+	//RA1 = RD0;
+	//RD0 = 16;
+	//call_AutoField FIR2;
 
-	delay9(RN_GRAM_IN2, RN_GRAM_IN2);//序列1delay9
+	//delay9(RN_GRAM_IN2, RN_GRAM_IN2);//序列1delay9
 
-	RD0 = RN_GRAM_IN2;
-	RA0 = RD0;
-	RD0 = RN_GRAM_IN;
-	RA1 = RD0;
-	RD0 = 16;
-	call_AutoField Sub_LMT;//序列减，值在RA0
+	//RD0 = RN_GRAM_IN2;
+	//RA0 = RD0;
+	//RD0 = RN_GRAM_IN;
+	//RA1 = RD0;
+	//RD0 = 16;
+	//call_AutoField Sub_LMT;//序列减，值在RA0
 
-	RD0 = RN_GRAM_IN;
-	RA0 = RD0;
-	RA1 = RD0;
-	RD1 = 0;//该值可变，默认为0
-	RD0 = 16;
-	call_AutoField MultiConstH16L16;//序列乘常量,结果在RA1
+	//RD0 = RN_GRAM_IN;
+	//RA0 = RD0;
+	//RA1 = RD0;
+	//RD1 = 0;//该值可变，默认为0
+	//RD0 = 16;
+	//call_AutoField MultiConstH16L16;//序列乘常量,结果在RA1
 
-	//两路相减
-	RD0 = RN_GRAM1;
-	RA0 = RD0;
-	RD0 = RN_GRAM_IN;
-	RA1 = RD0;
-	RD0 = 16;
-	call_AutoField Sub_LMT;//序列减，值在RA0
+	////两路相减
+	//RD0 = RN_GRAM1;
+	//RA0 = RD0;
+	//RD0 = RN_GRAM_IN;
+	//RA1 = RD0;
+	//RD0 = 16;
+	//call_AutoField Sub_LMT;//序列减，值在RA0
 
-	////x*1.9，与下面方法二选一
-	RD0 = RN_GRAM1;
-	send_para(RD0);
-	RD0 = 0x00f300f3;
-	send_para(RD0);
-	RD0 = RN_GRAM_OUT;
-	send_para(RD0);
-	RD0 = 16;
-	send_para(RD0);
-	call_AutoField MAC_MultiConst16_Q2207;
+	RA0 = RN_GRAM1;
+	RA1 = RN_GRAM_OUT;
+	for (int i = 0; i < 16; i++)
+	{
+		RD0 = M[RA0++];
+		M[RA1++] = RD0;
+	}
+
+	//////x*1.9，与下面方法二选一
+	//RD0 = RN_GRAM1;
+	//send_para(RD0);
+	//RD0 = 0x00f300f3;
+	//send_para(RD0);
+	//RD0 = RN_GRAM_OUT;
+	//send_para(RD0);
+	//RD0 = 16;
+	//send_para(RD0);
+	//call_AutoField MAC_MultiConst16_Q2207;
 
 	////x*0.9+x
 	//RD0 = RN_GRAM1;
@@ -391,6 +399,7 @@ Sub_AutoField doublemic
 	//call_AutoField Add_LMT;//序列加，值在RA0
 
 
+	Return_AutoField(0 * MMU_BASE);
 
 }
 

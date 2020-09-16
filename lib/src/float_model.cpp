@@ -1,6 +1,7 @@
 #include "float_model.h"
 #include "memory.h"
 #include <math.h>
+#include <stdio.h>
 
 extern void float2double(unsigned int x, double& y);
 extern void double2float(double x);
@@ -1119,7 +1120,8 @@ Sub_AutoField Min_Float
 //      浮点求平均值(序列)
 //  参数:
 //      1.RA0:数据
-//		2.RD0:序列长度,平均值结果（out）
+//		2.RD0:序列长度（32bit定点数格式）,平均值结果（out）
+//		3.RD1:序列长度（浮点数形式）
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -1129,6 +1131,15 @@ Sub_AutoField Mean_Float
 	double a,b;
 	int len = RD0.m_data;
 	b = 0;
+
+	int x = RD1.m_data;
+	RD1 = 0;
+	call_AutoField fix2float;
+	if (x != RD0.m_data)
+	{
+		printf("\n\nError:Mean_Float-RD1!!!\n\n");
+		Return_AutoField(0);
+	}
 
 	for (int i = 1; i < len; i++)
 	{
@@ -1150,7 +1161,8 @@ Sub_AutoField Mean_Float
 //      浮点求绝对值的平均值(序列)
 //  参数:
 //      1.RA0:数据
-//		2.RD0:序列长度,平均值结果（out）
+//		2.RD0:序列长度（32bit定点数格式）,平均值结果（out）
+//		3.RD1:序列长度（浮点数形式）
 //  备注:
 //      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
 //		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
@@ -1158,8 +1170,17 @@ Sub_AutoField Mean_Float
 Sub_AutoField Abs_Mean_Float
 {
 	double a,b;
-	int len = RD0.m_data;
 	b = 0;
+	int len = RD0.m_data;
+	
+	int x = RD1.m_data;
+	RD1 = 0;
+	call_AutoField fix2float;
+	if (x != RD0.m_data)
+	{
+		printf("\n\nError:Abs_Mean_Float-RD1!!!\n\n");
+		Return_AutoField(0);
+	}
 
 	for (int i = 1; i < len; i++)
 	{

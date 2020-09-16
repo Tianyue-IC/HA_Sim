@@ -390,7 +390,7 @@ void Multi24_16x24(int Multi24_0, int Multi24_1)
 //  函数名称:
 //      ModulationToZero
 //  函数功能:
-//      MAC指令为0x09, Q7输出
+//      MAC指令为0x08, Q15输出
 //		表示（1）实部调制(M1-IN0,M0-IN1)调制,计算y(n).H16*x(n).H16 以及 y(n).H16*x(n).L16,
 //      （2）Q0方式输出,即Q0.H16 = DATA1.H16*DATA0.H16（M1乘法器）, Q0.L16 = DATA1.H16*DATA0.L16（M0乘法器）,
 //      参见MAC数据路径示意图（2）文档。
@@ -406,7 +406,7 @@ void Multi24_16x24(int Multi24_0, int Multi24_1)
 ////////////////////////////////////////////////////////
 Sub_AutoField ModulationToZero
 {
-	Mac_Sim(RA0.m_data, RA1.m_data, 0, 0x09, RD1.m_data, RD0.m_data);
+	Mac_Sim(RA0.m_data, RA1.m_data, 0, 0x08, RD1.m_data, RD0.m_data);
 
 	Return_AutoField(0);
 
@@ -495,7 +495,7 @@ Sub_AutoField SeqMulti_DivQ7
 //      ModulationToZero2
 //  功能:
 //      调制
-//		MAC指令为0x08, Q7输出
+//		MAC指令为0x09, Q7输出
 //  参数:
 //      1.RA0:表地址
 //      2.RA1:操作数地址
@@ -506,7 +506,7 @@ Sub_AutoField SeqMulti_DivQ7
 ////////////////////////////////////////////////////////
 Sub_AutoField ModulationToZero2
 {
-	Mac_Sim(RA0.m_data, RA1.m_data, 0, 0x08, RD1.m_data, RD0.m_data);
+	Mac_Sim(RA0.m_data, RA1.m_data, 0, 0x09, RD1.m_data, RD0.m_data);
 
 	Return_AutoField(0);
 
@@ -792,6 +792,10 @@ void ComplexMulti(int addr_0, int addr_1, unsigned int Config_Reg, int addr_out,
 		RD1 = M[RA1++];
 		C = RD1 >> 16;
 		D = *(short*)(&RD1);
+		if (C == 0xffff8000)//硬件编码需求
+			C = 0xffff8001;
+		if (D == 0xffff8000)//硬件编码需求
+			D = 0xffff8001;
 		AC = A * C;
 		BD = B * D;
 		AD = A * D;
