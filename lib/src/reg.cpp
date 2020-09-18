@@ -92,12 +92,19 @@ void CReg::operator += (signed data)
 
 void CReg::operator += (CReg data)
 {
-    m_oper_status.SRQ_OverFlow = isAddOverflow(m_data, data.m_data);
-    m_oper_status.SRQ_OverFlow_H = isAddOverflowH(m_data, data.m_data);
+    if (isMemID())
+    {
+        m_data += data.m_data;
+        m_w(this->m_offset, m_data);
+    }
+    else
+    {
+        m_oper_status.SRQ_OverFlow = isAddOverflow(m_data, data.m_data);
+        m_oper_status.SRQ_OverFlow_H = isAddOverflowH(m_data, data.m_data);
 
-    m_data += data.m_data;
-    m_rq = m_data;
-
+        m_data += data.m_data;
+        m_rq = m_data;
+    }
 }
 
 void CReg::operator -= (signed data)
@@ -122,14 +129,21 @@ void CReg::operator -= (signed data)
 
 void CReg::operator -= (CReg data)
 {
-    m_oper_status.RQ_ForJudge = (DWORD)m_data == (DWORD)data.m_data ? 0 : ((DWORD)m_data > (DWORD)data.m_data ? 1 : (-1));
-    m_oper_status.SRQ_ForJudge = m_data == data.m_data ? 0 : (m_data > data.m_data ? 1 : (-1));
-    m_oper_status.SRQ_OverFlow = isAddOverflow(m_data, -data);
-    m_oper_status.SRQ_OverFlow_H = isAddOverflowH(m_data, -data);
+    if (isMemID())
+    {
+        m_data -= data.m_data;
+        m_w(this->m_offset, m_data);
+    }
+    else
+    {
+        m_oper_status.RQ_ForJudge = (DWORD)m_data == (DWORD)data.m_data ? 0 : ((DWORD)m_data > (DWORD)data.m_data ? 1 : (-1));
+        m_oper_status.SRQ_ForJudge = m_data == data.m_data ? 0 : (m_data > data.m_data ? 1 : (-1));
+        m_oper_status.SRQ_OverFlow = isAddOverflow(m_data, -data);
+        m_oper_status.SRQ_OverFlow_H = isAddOverflowH(m_data, -data);
 
-    m_data -= data.m_data;
-    m_rq = m_data;
-
+        m_data -= data.m_data;
+        m_rq = m_data;
+    }
 }
 
 void CReg::operator&=(signed data)
@@ -179,7 +193,15 @@ CReg CReg::operator++(int)
     }
     else
     {
-        *this += 1;
+        if (isMemID())
+        {
+            *this += 1;
+            m_w(this->m_offset, this->m_data);
+        }
+        else
+        {
+            *this += 1;
+        }
     }
     return temp;
 }
@@ -200,7 +222,15 @@ CReg CReg::operator--(int)
     }
     else
     {
-        *this -= 1;
+        if (isMemID())
+        {
+            *this -= 1;
+            m_w(this->m_offset, this->m_data);
+        }
+        else
+        {
+            *this -= 1;
+        }
     }
     return temp;
 

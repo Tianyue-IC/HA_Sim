@@ -688,6 +688,13 @@ void test_mem_oper()
 
 	M[RA0] += 1;
 	M[RA0] -= 1;
+	M[RA0] ++;
+	M[RA0] --;
+
+	RD0 = 2;
+	M[RA0] += RD0;
+	M[RA0] -= RD0;
+
 
 	RA0 += 1 * MMU_BASE;
 	RD0 += 1;
