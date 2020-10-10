@@ -48,7 +48,6 @@ Sub_AutoField fix2float
 	fix2float_end:
 	Return_AutoField(0);
 }
-
 ////////////////////////////////////////////////////////
 //  名称:
 //      fix2float_ser
@@ -1190,6 +1189,305 @@ Sub_AutoField Abs_Mean_Float
 	}
 	b = b / len;
 	double2float(b);
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      Abs_Max_Float
+//  功能:
+//      浮点求绝对值的最大值(序列)
+//  参数:
+//      1.RA0:数据
+//		2.RD0:序列长度,最大值结果（out）
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField Abs_Max_Float
+{
+	double a,b;
+	int len = RD0.m_data;
+	RD0 = GET_M(RA0);
+	float2double(RD0.m_data, b);
+
+	for (int i = 1; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		float2double(RD0.m_data, a);
+		if ((fabs(a)) > (fabs(b)))
+			b = a;
+	}
+	double2float(b);
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      Abs_Min_Float
+//  功能:
+//      浮点求绝对值的最小值(序列)
+//  参数:
+//      1.RA0:数据
+//		2.RD0:序列长度,最小值结果（out）
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField Abs_Min_Float
+{
+	double a,b;
+	int len = RD0.m_data;
+	RD0 = GET_M(RA0);
+	float2double(RD0.m_data, b);
+
+	for (int i = 1; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		float2double(RD0.m_data, a);
+		if ((fabs(a)) < (fabs(b)))
+			b = a;
+	}
+	double2float(b);
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      AccuSum
+//  功能:
+//      浮点序列和
+//  参数:
+//      1.RA0:数据地址
+//		2.RD0:序列长度,最大值结果（out）
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField AccuSum
+{
+	double a,b;
+	int len = RD0.m_data;
+	RD0 = M[RA0];
+	float2double(RD0.m_data, b);
+
+	for (int i = 1; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		float2double(RD0.m_data, a);
+		b += a;
+	}
+	double2float(b);
+
+	Return_AutoField(0);
+}
+
+
+////////////////////////////////////////////////////////
+//  名称:
+//      Abs_AccuSum
+//  功能:
+//      浮点序列绝对值的和
+//  参数:
+//      1.RA0:数据地址
+//		2.RD0:序列长度,最大值结果（out）
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField Abs_AccuSum
+{
+	double a,b;
+	int len = RD0.m_data;
+	RD0 = M[RA0];
+	float2double(RD0.m_data, b);
+	b = fabs(b);
+	for (int i = 1; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		float2double(RD0.m_data, a);
+		b += fabs(a);
+	}
+	double2float(b);
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      ABS_MultiSum_Float
+//  功能:
+//      浮点求绝对值的乘累加(双序列)
+//  参数:
+//      1.RA0:数据
+//      2.RA1:数据
+//		3.RD0:序列长度,乘累加结果（out）
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField ABS_MultiSum_Float
+{
+	double a,b,c;
+	int len = RD0.m_data;
+	c = 0;
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RD1 = GET_M(RA1 + i * MMU_BASE);
+
+		float2double(RD0.m_data, a);
+		float2double(RD1.m_data, b);
+		c = c + (fabs(a)) * (fabs(b));
+	}
+
+	double2float(c);
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      AX_Add_BY
+//  功能:
+//      线性变换	A*X+B*Y=C
+//  参数:
+//      1.RA0:数据X,计算结果（out）
+//      2.RA1:数据Y
+//		3.RD0:序列长度
+//		4.RD1:A:<25:0>定点数（正数），小数点位于<25>与<24>之间
+//		5.RD2:B:<25:0>定点数（正数），小数点位于<25>与<24>之间
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField AX_Add_BY
+{
+	double X,Y;
+	int len = RD0.m_data;
+	double a = RD1.m_data;
+	a = a / 16777216;
+	double b = RD2.m_data;
+	b = b / 16777216;
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RD1 = GET_M(RA1 + i * MMU_BASE);
+
+		float2double(RD0.m_data, X);
+		float2double(RD1.m_data, Y);
+		X = X * a + Y * b;
+		double2float(X);
+		M[RA0 + i * MMU_BASE] = RD0;
+	}
+
+	Return_AutoField(0);
+}
+
+
+////////////////////////////////////////////////////////
+//  名称:
+//      AX_Sub_BY
+//  功能:
+//      线性变换	A*X-B*Y=C
+//  参数:
+//      1.RA0:数据X,计算结果（out）
+//      2.RA1:数据Y
+//		3.RD0:序列长度
+//		4.RD1:A:<25:0>定点数（正数），小数点位于<25>与<24>之间
+//		5.RD2:B:<25:0>定点数（正数），小数点位于<25>与<24>之间
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField AX_Sub_BY
+{
+	double X,Y;
+	int len = RD0.m_data;
+	double a = RD1.m_data;
+	a = a / 16777216;
+	double b = RD2.m_data;
+	b = b / 16777216;
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RD1 = GET_M(RA1 + i * MMU_BASE);
+
+		float2double(RD0.m_data, X);
+		float2double(RD1.m_data, Y);
+		X = X * a - Y * b;
+		double2float(X);
+		M[RA0 + i * MMU_BASE] = RD0;
+	}
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      CompareMin_Float_Dual
+//  功能:
+//      双序列大小比较，Ci = Min(Ai,Bi)
+//  参数:
+//      1.RA0:A0,A1,A2,...,Ai;输出序列C（out）
+//      2.RA1:B0,B1,B2,...,Bi
+//		3.RD0:序列长度
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField CompareMin_Float_Dual
+{
+	double X,Y;
+	int len = RD0.m_data;
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RD1 = GET_M(RA1 + i * MMU_BASE);
+
+		float2double(RD0.m_data, X);
+		float2double(RD1.m_data, Y);
+		if (X > Y)
+			X = Y;
+		double2float(X);
+		M[RA0 + i * MMU_BASE] = RD0;
+	}
+
+	Return_AutoField(0);
+}
+
+////////////////////////////////////////////////////////
+//  名称:
+//      CompareMax_Float_Dual
+//  功能:
+//      双序列大小比较，Ci = Max(Ai,Bi)
+//  参数:
+//      1.RA0:A0,A1,A2,...,Ai;输出序列C（out）
+//      2.RA1:B0,B1,B2,...,Bi
+//		3.RD0:序列长度
+//  备注:
+//      本系统浮点数为IEEE754格式的浮点数中的规约形式的32位浮点数，
+//		即非规约形式的浮点数和极值不在我系统表示范围内。（详见百度百科）
+////////////////////////////////////////////////////////
+Sub_AutoField CompareMax_Float_Dual
+{
+	double X,Y;
+	int len = RD0.m_data;
+	for (int i = 0; i < len; i++)
+	{
+		RD0 = GET_M(RA0 + i * MMU_BASE);
+		RD1 = GET_M(RA1 + i * MMU_BASE);
+
+		float2double(RD0.m_data, X);
+		float2double(RD1.m_data, Y);
+		if (X < Y)
+			X = Y;
+		double2float(X);
+		M[RA0 + i * MMU_BASE] = RD0;
+	}
 
 	Return_AutoField(0);
 }

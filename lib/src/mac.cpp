@@ -697,7 +697,7 @@ Sub_AutoField FIR_MAC
 ////////////////////////////////////////////////////////
 Sub_AutoField FIR_DATA
 {
-	RA0 = RN_GRAM2;
+	RA0 = RN_GRAM8;
 
 // firÏµÊý
 #define a0          102 

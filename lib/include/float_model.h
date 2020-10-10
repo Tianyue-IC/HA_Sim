@@ -41,6 +41,15 @@
 #define Min_Float Min_Float()
 #define Mean_Float Mean_Float()
 #define Abs_Mean_Float Abs_Mean_Float()
+#define Abs_Max_Float Abs_Max_Float()
+#define Abs_Min_Float Abs_Min_Float()
+#define AccuSum AccuSum()
+#define Abs_AccuSum Abs_AccuSum()
+#define ABS_MultiSum_Float ABS_MultiSum_Float()
+#define AX_Add_BY AX_Add_BY()
+#define AX_Sub_BY AX_Sub_BY()
+#define CompareMin_Float_Dual CompareMin_Float_Dual()
+#define CompareMax_Float_Dual CompareMax_Float_Dual()
 
 
 
@@ -121,3 +130,21 @@ extern Sub_AutoField Min_Float;
 extern Sub_AutoField Mean_Float;
 
 extern Sub_AutoField Abs_Mean_Float;
+
+extern Sub_AutoField Abs_Max_Float;
+
+extern Sub_AutoField Abs_Min_Float;
+
+extern Sub_AutoField AccuSum;
+
+extern Sub_AutoField Abs_AccuSum;
+
+extern Sub_AutoField ABS_MultiSum_Float;
+
+extern Sub_AutoField AX_Add_BY;
+
+extern Sub_AutoField AX_Sub_BY;
+
+extern Sub_AutoField CompareMin_Float_Dual;
+
+extern Sub_AutoField CompareMax_Float_Dual;

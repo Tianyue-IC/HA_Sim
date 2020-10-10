@@ -2,6 +2,7 @@
 #include <math.h>
 #include "memory.h"
 #include <string.h>
+#include <stdio.h>
 
 
 CFir_base fir1;
@@ -63,10 +64,15 @@ void CFir_base::FirFilterFrame(int bank, int* dataBuf, int dataLen)
 			xBuf_bank[bank][LEVEL - j - 1] = xBuf_bank[bank][LEVEL - j - 2];
 		}
 		xBuf_bank[bank][0] = dataBuf[i];
+		//printf("0x%x\n", dataBuf[i]);
 		for (int j = 0; j < LEVEL; j++)
 		{
 			s += Multi24_16x24(a_bank[bank][j], xBuf_bank[bank][j]);
+			//int a = s >> 15;
+			//printf("0x%x\n", a);
 		}
+		//printf("0x11223344\n");
+
 		s = s >> 7;
 		//оч╥Ы
 		if (s > 8388607)
